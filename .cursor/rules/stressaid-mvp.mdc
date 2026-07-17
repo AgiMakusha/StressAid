@@ -1,0 +1,60 @@
+---
+description: Non-negotiable StressAid MVP product, privacy, scoring, AI/medical, design, and engineering guardrails
+alwaysApply: true
+---
+
+# StressAid MVP — Permanent Guardrails
+
+Source of truth: `docs/StressAid_MVP_Full_Technical_Specification_EN.md`. Do not implement features outside MVP scope. `main` must always remain deployable.
+
+## Product
+
+- Evaluate the **collective class environment**, never individual students.
+- MVP UX only: **student questionnaire** and **teacher dashboard**.
+- Six sections only: Mood, Safety, Engagement, FOMO, Social Aspects, Predictability.
+- Teacher dashboard: class aggregates, Class Environment Wheel, section averages, five-colour distributions, section detail panel. **No question-level breakdown.**
+- Suggested actions are **static and human-authored** only.
+
+## Student privacy
+
+- Never request or store: name, email, student ID, date of birth, demographic profile, open text, device fingerprint, or advertising identifier.
+- Never show an individual student score, interpretation, risk message, or personalised recommendation.
+- After submit, student sees only a **generic thank-you** screen (support copy must not vary by answers).
+- Submission API returns success only — **never calculated student scores**.
+
+## Teacher privacy
+
+- Never expose individual responses or raw response exports.
+- Never show aggregates below the configurable minimum response threshold.
+- Never add subgroup filters in the MVP.
+- Teacher routes and APIs must be protected **server-side** (no client-only gates).
+
+## Scoring
+
+- Scale: Never = 0, Rarely = 1, Sometimes = 2, Often = 3, Always = 4.
+- Section percentage = `(average raw score / 4) * 100`.
+- All six questions are **positively scored**.
+- Deterministic arithmetic only — no models, heuristics, or inference.
+
+## AI and medical boundaries
+
+- Do **not** add AI, ML, LLMs, emotion recognition, sentiment analysis, biometric analysis, automated profiling, or model-generated actions.
+- Do **not** add medical, diagnostic, clinical, therapeutic, or predictive claims.
+- Positioning: school environment feedback / collective signals only.
+
+## Design
+
+- Use supplied official SHU2026 logo and StressAid logo as **separate** identities (`public/brand/`).
+- Do not redraw, recolour, distort, crop, or merge logos.
+- Follow SHU-inspired palette and `docs/design/SHU-style-reference.png`.
+- Response colours fixed: magenta `#E71183`, orange `#F07D00`, yellow `#F7A704`, green `#009844`, blue `#169EDA`.
+- Class Environment Wheel: **equal segment geometry** regardless of score.
+- Colour must never be the only carrier of meaning (labels, icons, text/table alternatives).
+
+## Engineering
+
+- TypeScript strict mode; Zod server-side validation.
+- No secrets in client code; no answer payloads in logs.
+- Accessibility target: WCAG 2.2 AA.
+- Live updates: polling with a stable fallback (Realtime optional, not sole path).
+- Keep `main` demonstrable and deployable at all times.

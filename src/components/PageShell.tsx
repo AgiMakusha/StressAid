@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { BrandHeader } from "./BrandHeader";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-import { getMessages } from "@/lib/i18n";
+import { getMessages, LocaleProvider, type Locale } from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
 import styles from "./PageShell.module.css";
 
@@ -15,10 +15,16 @@ interface PageShellProps {
    */
   variant?: "default" | "wide";
   /**
-   * Whether to show the EN / IT interface-language switcher. Hidden on the
-   * student questionnaire, whose language always follows the campaign/round.
+   * Whether to show the EN / IT interface-language switcher.
    */
   showLocaleSwitcher?: boolean;
+  /**
+   * Optional locale override. When provided, the shell (switcher active state,
+   * footer, and descendants via context) uses this locale instead of the global
+   * interface cookie. The student questionnaire uses this to default to the
+   * campaign/round language while still letting the switcher change it.
+   */
+  locale?: Locale;
 }
 
 /**
@@ -32,34 +38,39 @@ export async function PageShell({
   children,
   variant = "default",
   showLocaleSwitcher = true,
+  locale: localeOverride,
 }: PageShellProps) {
-  const locale = await getLocale();
+  const locale = localeOverride ?? (await getLocale());
   const m = getMessages(locale);
   const mainClassName =
     variant === "wide" ? `${styles.main} ${styles.mainWide}` : styles.main;
   return (
-    <div className={styles.shell}>
-      {showLocaleSwitcher ? (
-        <div className={styles.utilityBar}>
-          <LanguageSwitcher />
-        </div>
-      ) : null}
-      <BrandHeader />
-      <main className={mainClassName}>{children}</main>
-      <footer className={styles.footer}>
-        <div className={styles.attribution}>
-          <span className={styles.attributionLabel}>{m.footer.createdDuring}</span>
-          <Image
-            src="/brand/shu2026-logo.png"
-            alt="Social Hackathon Umbria 2026"
-            width={300}
-            height={61}
-            className={styles.shuLogo}
-            unoptimized
-          />
-        </div>
-        <p className={styles.footerText}>{m.footer.text}</p>
-      </footer>
-    </div>
+    <LocaleProvider locale={locale}>
+      <div className={styles.shell}>
+        {showLocaleSwitcher ? (
+          <div className={styles.utilityBar}>
+            <LanguageSwitcher />
+          </div>
+        ) : null}
+        <BrandHeader />
+        <main className={mainClassName}>{children}</main>
+        <footer className={styles.footer}>
+          <div className={styles.attribution}>
+            <span className={styles.attributionLabel}>
+              {m.footer.createdDuring}
+            </span>
+            <Image
+              src="/brand/shu2026-logo.png"
+              alt="Social Hackathon Umbria 2026"
+              width={300}
+              height={61}
+              className={styles.shuLogo}
+              unoptimized
+            />
+          </div>
+          <p className={styles.footerText}>{m.footer.text}</p>
+        </footer>
+      </div>
+    </LocaleProvider>
   );
 }

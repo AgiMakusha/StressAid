@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { PageShell } from "@/components/PageShell";
 import { RoundQuestionnaire } from "@/components/student/RoundQuestionnaire";
 import { createClient } from "@/lib/supabase/server";
-import { getMessages, type Locale } from "@/lib/i18n";
+import {
+  LOCALE_COOKIE,
+  getMessages,
+  isLocale,
+  resolveLocale,
+  type Locale,
+} from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
 import styles from "./unavailable.module.css";
 
@@ -71,14 +78,23 @@ export default async function StudentRoundPage({
     );
   }
 
+  // The questionnaire defaults to the campaign/round language, but the student
+  // may change it with the switcher. An explicit locale cookie (their choice)
+  // wins; otherwise we fall back to the campaign language.
+  const cookieStore = await cookies();
+  const rawLocale = cookieStore.get(LOCALE_COOKIE)?.value;
+  const effectiveLocale: Locale = isLocale(rawLocale)
+    ? rawLocale
+    : resolveLocale(round.language);
+
   return (
-    <PageShell showLocaleSwitcher={false}>
+    <PageShell locale={effectiveLocale}>
       <RoundQuestionnaire
         publicCode={publicCode}
         title={round.title ?? ""}
         classDisplayName={round.classDisplayName ?? ""}
         roundDisplayName={round.roundDisplayName ?? ""}
-        language={round.language}
+        language={effectiveLocale}
       />
     </PageShell>
   );

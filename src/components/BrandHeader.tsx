@@ -12,7 +12,7 @@ interface BrandHeaderProps {
  * two identities stay separate and StressAid is clearly dominant.
  *
  * The logo is rendered at its original aspect ratio and must never be redrawn,
- * recoloured, distorted, cropped, or merged (see stressaid-mvp guardrails).
+ * recoloured, distorted, cropped, or merged.
  */
 export function BrandHeader({ frameworkAttribution }: BrandHeaderProps) {
   return (

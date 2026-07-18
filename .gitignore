@@ -30,3 +30,9 @@ yarn-error.log*
 *.tsbuildinfo
 .vercel
 .env*.local
+
+# local IDE / agent config
+.cursor/
+
+# private internal documentation (not for public commit)
+docs/private/

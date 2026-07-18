@@ -1,12 +1,11 @@
 /*
  * StressAid central design tokens.
- * Source of truth: docs/StressAid_MVP_Full_Technical_Specification_EN.md (§5.1, §8.2).
  * Colour must never be the only carrier of meaning — always pair with labels,
  * icons, or text/table alternatives in the UI.
  */
 
 :root {
-  /* SHU-inspired interface palette (§8.2) */
+  /* SHU-inspired interface palette */
   --shu-blue: #169eda;
   --shu-green: #009844;
   --shu-magenta: #e71183;
@@ -14,7 +13,7 @@
   --shu-yellow: #f7a704;
   --shu-purple: #6b3f91;
 
-  /* Fixed response colours (§5.1) — Never → Rarely → Sometimes → Often → Always.
+  /* Fixed response colours — Never → Rarely → Sometimes → Often → Always.
      These are canonical and must not be altered. */
   --response-never: #e71183; /* magenta */
   --response-rarely: #f07d00; /* orange */

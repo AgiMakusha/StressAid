@@ -44,7 +44,7 @@ export function SectionOverviewList({
                 className={styles.iconBadge}
                 style={{ color: section.colorVar }}
               >
-                <SectionIcon iconKey={section.iconKey} size={22} />
+                <SectionIcon iconKey={section.iconKey} size={68} />
               </span>
               <span className={styles.body}>
                 <span className={styles.topLine}>

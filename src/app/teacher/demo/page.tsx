@@ -3,6 +3,8 @@ import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 import { TeacherDashboard } from "@/components/teacher/TeacherDashboard";
 import { THRESHOLD_REACHED_DASHBOARD } from "@/lib/teacher/fixtures";
+import { getMessages } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -17,12 +19,24 @@ export const metadata: Metadata = {
  * To preview the below-threshold state, swap the fixture for
  * BELOW_THRESHOLD_DASHBOARD.
  */
-export default function TeacherDemoPage() {
+export default async function TeacherDemoPage() {
+  const locale = await getLocale();
+  const m = getMessages(locale);
+  const data = {
+    ...THRESHOLD_REACHED_DASHBOARD,
+    campaign: {
+      ...THRESHOLD_REACHED_DASHBOARD.campaign,
+      nextCheckInLabel: m.teacherDashboard.exampleNextCheckIn,
+    },
+  };
+
   return (
     <PageShell variant="wide">
-      <TeacherDashboard data={THRESHOLD_REACHED_DASHBOARD} />
-      <p className={styles.backLink}>
-        <Link href="/">Back to home</Link>
+      <TeacherDashboard data={data} locale={locale} />
+      <p className={styles.backRow}>
+        <Link href="/" className={styles.backButton}>
+          {m.privacy.backToHome}
+        </Link>
       </p>
     </PageShell>
   );

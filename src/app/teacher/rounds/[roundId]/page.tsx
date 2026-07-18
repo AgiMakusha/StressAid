@@ -44,7 +44,7 @@ export default async function RoundResultsPage({
         <div className={styles.notFound}>
           <h1>{r.unavailableTitle}</h1>
           <p>{r.unavailableBody}</p>
-          <Link href="/teacher/dashboard" className={styles.btn}>
+          <Link href="/teacher/dashboard" className={styles.btnPrimary}>
             {r.backToCampaigns}
           </Link>
         </div>
@@ -65,7 +65,7 @@ export default async function RoundResultsPage({
             {meta.title} — {meta.roundDisplayName}
           </h1>
           <div className={styles.actions}>
-            <Link href="/teacher/dashboard" className={styles.btn}>
+            <Link href="/teacher/dashboard" className={styles.btnPrimary}>
               {r.backToCampaigns}
             </Link>
             <RefreshButton className={styles.btn} />
@@ -85,6 +85,12 @@ export default async function RoundResultsPage({
       </div>
 
       <TeacherDashboard data={dashboardData} locale={locale} />
+
+      <p className={styles.backRow}>
+        <Link href="/teacher/dashboard" className={styles.btnPrimary}>
+          {r.backToCampaigns}
+        </Link>
+      </p>
     </PageShell>
   );
 }

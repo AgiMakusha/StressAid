@@ -70,10 +70,12 @@ function DashboardHeader({
     <header className={styles.header}>
       <div className={styles.headerTop}>
         <div>
-          <p className={styles.demoBadge}>
-            <span className={styles.demoDot} aria-hidden="true" />
-            {data.isDemo ? t.demoBadge : t.betaBadge}
-          </p>
+          {data.isDemo ? (
+            <p className={styles.demoBadge}>
+              <span className={styles.demoDot} aria-hidden="true" />
+              {t.demoBadge}
+            </p>
+          ) : null}
           <h1 className={styles.className}>{klass.displayName}</h1>
           <p className={styles.campaignTitle}>{campaign.title}</p>
         </div>
@@ -152,6 +154,7 @@ function DashboardResults({
             onSelect={setSelectedSectionId}
             overallScoreDisplay={view.overallScoreDisplay}
             overallInterpretationText={view.overallInterpretationText}
+            overallLabelId={view.overallLabelId}
             locale={locale}
           />
           <div className={styles.overviewCard}>

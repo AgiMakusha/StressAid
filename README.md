@@ -12,11 +12,10 @@ aggregated, threshold-protected class-level signals.
 
 ## Hackathon beta
 
-> **Hackathon beta — use synthetic or test data only.**
+> **Hackathon beta · ready to use.**
 >
-> This is a public beta for demonstration and voluntary testing. It is **not
-> production-ready for real schoolchildren.** A full security and GDPR review is
-> required before any real-school use.
+> This is a public hackathon beta ready for demonstration and voluntary testing.
+> A full security and GDPR review is still required before any real-school use.
 
 This build adds a public, Supabase-backed workflow:
 

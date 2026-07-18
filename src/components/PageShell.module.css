@@ -4,15 +4,15 @@
   min-height: 100dvh;
 }
 
-/* Interface-language switcher, placed below the footer and centred within the
-   content column across all layouts. */
-.localeBar {
+/* Utility bar holding the interface-language switcher, placed under the brand
+   header and aligned to the right within the content column. */
+.utilityBar {
   width: 100%;
   max-width: var(--content-max-width-wide);
   margin: 0 auto;
-  padding: var(--space-4) var(--shell-padding-inline) var(--space-5);
+  padding: var(--space-4) var(--shell-padding-inline) 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .main {
@@ -55,6 +55,16 @@
   height: 22px;
 }
 
+.betaBadge {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-2) var(--shell-padding-inline) 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-style: italic;
+  color: var(--shu-blue);
+}
+
 .footerText {
   max-width: var(--content-max-width);
   margin: 0 auto;
@@ -70,6 +80,7 @@
     text-align: center;
   }
 
+  .betaBadge,
   .footerText {
     text-align: center;
   }

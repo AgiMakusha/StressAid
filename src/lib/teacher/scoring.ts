@@ -82,6 +82,19 @@ export const INTERPRETATION_TEXT: Record<InterpretationLabelId, string> = {
   strongConcern: "Strong concern",
 };
 
+/**
+ * Response-scale colour for each interpretation band. Strong (best) maps to
+ * Always/blue; Strong concern (worst) maps to Never/magenta. Colour is always
+ * paired with the label text — never the sole carrier of meaning.
+ */
+export const INTERPRETATION_COLOR: Record<InterpretationLabelId, string> = {
+  strong: "var(--response-always)",
+  generallyPositive: "var(--response-often)",
+  monitor: "var(--response-sometimes)",
+  needsAttention: "var(--response-rarely)",
+  strongConcern: "var(--response-never)",
+};
+
 export function interpretationText(percentage: number): string {
   return INTERPRETATION_TEXT[interpretationLabel(percentage)];
 }

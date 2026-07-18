@@ -31,7 +31,7 @@ export function SectionDetailPanel({
           className={styles.iconBadge}
           style={{ color: section.colorVar }}
         >
-          <SectionIcon iconKey={section.iconKey} size={26} />
+          <SectionIcon iconKey={section.iconKey} size={72} />
         </span>
         <div>
           <h3 id="section-detail-heading" className={styles.title}>

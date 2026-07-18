@@ -50,8 +50,6 @@ export function CampaignManager({
         </form>
       </div>
 
-      <p className={styles.betaNotice}>{d.betaNotice}</p>
-
       <section className={styles.panel} aria-labelledby="create-heading">
         <h2 id="create-heading" className={styles.panelTitle}>
           {d.createCampaign}

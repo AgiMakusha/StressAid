@@ -53,7 +53,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: min(100%, 64px);
+  width: min(100%, 92px);
   aspect-ratio: 1;
   border: 2px solid var(--color-border);
   border-radius: 50%;
@@ -62,7 +62,7 @@
 }
 
 .icon > svg {
-  width: 62%;
+  width: 82%;
   height: auto;
 }
 

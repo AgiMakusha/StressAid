@@ -14,12 +14,12 @@ export interface Messages {
   };
   footer: {
     createdDuring: string;
+    betaBadge: string;
     text: string;
   };
   landing: {
     kicker: string;
     lede: string;
-    betaNotice: string;
     getStarted: string;
     answerTitle: string;
     answerBodyBefore: string;
@@ -62,7 +62,6 @@ export interface Messages {
     yourCampaigns: string;
     signedInAs: (email: string) => string;
     signOut: string;
-    betaNotice: string;
     createCampaign: string;
     creating: string;
     titleLabel: string;
@@ -104,7 +103,6 @@ export interface Messages {
   };
   teacherDashboard: {
     demoBadge: string;
-    betaBadge: string;
     live: string;
     closed: string;
     draft: string;
@@ -140,6 +138,8 @@ export interface Messages {
     selectSection: string;
     wheelAriaLabel: string;
     reassessDefault: string;
+    /** Demo fixture only — example reassessment timing label. */
+    exampleNextCheckIn: string;
   };
   student: {
     welcomeHeading: string;
@@ -171,12 +171,12 @@ const en: Messages = {
   },
   footer: {
     createdDuring: "Created during",
+    betaBadge: "Hackathon beta · ready to use",
     text: "Organised by EGInA in Cascia, Italy. StressAid is a privacy-first school environment feedback tool.",
   },
   landing: {
     kicker: "Social Hackathon Umbria 2026 — MVP",
     lede: "StressAid is a privacy-first school environment feedback tool. Students answer a short, anonymous questionnaire. Answers are combined at class level and shown to teachers as collective signals — never as individual results.",
-    betaNotice: "Hackathon beta — use synthetic or test data only.",
     getStarted: "Get started",
     answerTitle: "Answer a questionnaire",
     answerBodyBefore: "Open the questionnaire link provided by your teacher. It looks like ",
@@ -199,7 +199,7 @@ const en: Messages = {
     signInTitle: "Teacher sign in",
     signInLede: "Sign in to manage your class campaigns and rounds.",
     signupTitle: "Create a teacher test account",
-    signupLede: "Hackathon beta — use synthetic or test data only.",
+    signupLede: "Hackathon beta · ready to use.",
     emailLabel: "Email",
     passwordLabel: "Password",
     signInButton: "Sign in",
@@ -223,7 +223,6 @@ const en: Messages = {
     yourCampaigns: "Your campaigns",
     signedInAs: (email) => `Signed in as ${email}`,
     signOut: "Sign out",
-    betaNotice: "Hackathon beta — use synthetic or test data only.",
     createCampaign: "Create campaign",
     creating: "Creating…",
     titleLabel: "Title",
@@ -261,7 +260,7 @@ const en: Messages = {
     unavailableTitle: "Results unavailable",
     unavailableBody:
       "This round could not be found, or it does not belong to your account.",
-    backToCampaigns: "Back to campaigns",
+    backToCampaigns: "Back to dashboard",
     refreshResults: "Refresh results",
     refreshing: "Refreshing…",
     closeRound: "Close round",
@@ -269,7 +268,6 @@ const en: Messages = {
   },
   teacherDashboard: {
     demoBadge: "Demo data · Synthetic class example",
-    betaBadge: "Hackathon beta · synthetic or test data only",
     live: "Live",
     closed: "Closed",
     draft: "Draft",
@@ -309,6 +307,7 @@ const en: Messages = {
     wheelAriaLabel:
       "Class Environment Wheel. Six equal sections; each shows its response distribution from Never at the centre to Always at the outer edge. Select a section to view details.",
     reassessDefault: "Start a new round when you want to reassess this class.",
+    exampleNextCheckIn: "Example next check-in: in six weeks",
   },
   student: {
     welcomeHeading: "Welcome!",
@@ -350,12 +349,12 @@ const it: Messages = {
   },
   footer: {
     createdDuring: "Creato durante",
+    betaBadge: "Beta hackathon · pronto all’uso",
     text: "Organizzato da EGInA a Cascia, Italia. StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy.",
   },
   landing: {
     kicker: "Social Hackathon Umbria 2026 — MVP",
     lede: "StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy. Gli studenti rispondono a un breve questionario anonimo. Le risposte vengono unite a livello di classe e mostrate agli insegnanti come segnali collettivi, mai come risultati individuali.",
-    betaNotice: "Beta hackathon — usa solo dati sintetici o di prova.",
     getStarted: "Inizia",
     answerTitle: "Rispondi a un questionario",
     answerBodyBefore: "Apri il link al questionario fornito dal tuo insegnante. Ha un formato simile a ",
@@ -378,7 +377,7 @@ const it: Messages = {
     signInTitle: "Accesso insegnanti",
     signInLede: "Accedi per gestire le campagne e le rilevazioni della tua classe.",
     signupTitle: "Crea un account insegnante di prova",
-    signupLede: "Beta hackathon — usa solo dati sintetici o di prova.",
+    signupLede: "Beta hackathon · pronto all’uso.",
     emailLabel: "Email",
     passwordLabel: "Password",
     signInButton: "Accedi",
@@ -402,7 +401,6 @@ const it: Messages = {
     yourCampaigns: "Le tue campagne",
     signedInAs: (email) => `Accesso effettuato come ${email}`,
     signOut: "Esci",
-    betaNotice: "Beta hackathon — usa solo dati sintetici o di prova.",
     createCampaign: "Crea una campagna",
     creating: "Creazione…",
     titleLabel: "Titolo della campagna",
@@ -440,7 +438,7 @@ const it: Messages = {
     unavailableTitle: "Risultati non disponibili",
     unavailableBody:
       "Non è stato possibile trovare questa rilevazione, oppure non appartiene al tuo account.",
-    backToCampaigns: "Torna alle campagne",
+    backToCampaigns: "Torna alla dashboard",
     refreshResults: "Aggiorna i risultati",
     refreshing: "Aggiornamento…",
     closeRound: "Chiudi la rilevazione",
@@ -448,7 +446,6 @@ const it: Messages = {
   },
   teacherDashboard: {
     demoBadge: "Dati dimostrativi · Esempio di classe sintetica",
-    betaBadge: "Beta hackathon · solo dati sintetici o di prova",
     live: "Aperta",
     closed: "Chiusa",
     draft: "Bozza",
@@ -489,6 +486,7 @@ const it: Messages = {
       "Ruota dell’ambiente della classe. Sei sezioni uguali; ciascuna mostra la distribuzione delle risposte da Mai al centro a Sempre sul bordo esterno. Seleziona una sezione per vedere i dettagli.",
     reassessDefault:
       "Avvia una nuova rilevazione quando vuoi riesaminare questa classe.",
+    exampleNextCheckIn: "Esempio di prossima rilevazione: tra sei settimane",
   },
   student: {
     welcomeHeading: "Benvenuto!",

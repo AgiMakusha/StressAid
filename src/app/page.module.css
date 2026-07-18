@@ -26,16 +26,6 @@
   max-width: 60ch;
 }
 
-.betaNotice {
-  display: inline-block;
-  margin-top: var(--space-3);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface-muted, #f7f7f9);
-  font-weight: var(--font-weight-medium);
-}
-
 .linksSection {
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-5);

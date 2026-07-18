@@ -1,3 +1,24 @@
-.backLink {
+.backRow {
   margin-top: var(--space-6);
+}
+
+.backButton {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--shu-blue);
+  color: var(--ui-white);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: color-mix(in srgb, var(--shu-blue) 88%, black);
 }

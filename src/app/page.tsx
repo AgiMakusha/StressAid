@@ -14,7 +14,6 @@ export default async function HomePage() {
         <p className={styles.kicker}>{m.kicker}</p>
         <h1 className={styles.title}>StressAid</h1>
         <p className={styles.lede}>{m.lede}</p>
-        <p className={styles.betaNotice}>{m.betaNotice}</p>
       </section>
 
       <section aria-labelledby="actions-heading" className={styles.linksSection}>

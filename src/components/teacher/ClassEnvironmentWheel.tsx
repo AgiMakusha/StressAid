@@ -1,8 +1,9 @@
 "use client";
 
-import { SectionIcon } from "./SectionIcon";
 import type { SectionView } from "@/lib/teacher/viewModel";
 import type { SectionId } from "@/lib/questionnaire";
+import type { InterpretationLabelId } from "@/lib/teacher/types";
+import { INTERPRETATION_COLOR } from "@/lib/teacher/scoring";
 import { DEFAULT_LOCALE, getMessages, type Locale } from "@/lib/i18n";
 import {
   annularSectorPath,
@@ -19,19 +20,21 @@ interface ClassEnvironmentWheelProps {
   onSelect: (id: SectionId) => void;
   overallScoreDisplay: number;
   overallInterpretationText: string;
+  overallLabelId: InterpretationLabelId;
   locale?: Locale;
 }
 
-/* Layout constants. The viewBox leaves generous horizontal room so section
-   labels sit just outside the ring without clipping. The donut stays circular
-   because inner/outer radii are equal in both axes. */
-const VB_WIDTH = 540;
-const VB_HEIGHT = 430;
-const CX = 280;
-const CY = 210;
+/* Layout constants. The viewBox leaves generous room so larger section labels
+   sit just outside the ring without clipping. The donut stays circular because
+   inner/outer radii are equal in both axes. OUTER_R is kept large relative to
+   HOLE_R so even a single response still paints a clearly visible band. */
+const VB_WIDTH = 640;
+const VB_HEIGHT = 520;
+const CX = 320;
+const CY = 255;
 const HOLE_R = 56; // Centre hole — overall result only; no response colour here.
-const OUTER_R = 135;
-const LABEL_R = OUTER_R + 34;
+const OUTER_R = 152;
+const LABEL_R = OUTER_R + 48;
 const POP_OUT = 13; // Non-colour selected marker: sector nudges outward.
 
 export function ClassEnvironmentWheel({
@@ -40,9 +43,11 @@ export function ClassEnvironmentWheel({
   onSelect,
   overallScoreDisplay,
   overallInterpretationText,
+  overallLabelId,
   locale = DEFAULT_LOCALE,
 }: ClassEnvironmentWheelProps) {
   const t = getMessages(locale).teacherDashboard;
+  const situationColor = INTERPRETATION_COLOR[overallLabelId];
   return (
     <div className={styles.wheelWrap}>
       <svg
@@ -83,12 +88,6 @@ export function ClassEnvironmentWheel({
           const cosMid = Math.cos((midAngle * Math.PI) / 180);
           const anchorPoint = polarToCartesian(CX, CY, midAngle, LABEL_R);
           const textAnchor = cosMid >= 0 ? "start" : "end";
-          const iconSize = 18;
-          const iconX =
-            textAnchor === "start"
-              ? anchorPoint.x
-              : round(anchorPoint.x - iconSize);
-          const iconY = round(anchorPoint.y - iconSize - 16);
 
           const distributionDescription = section.categories
             .map(
@@ -143,19 +142,8 @@ export function ClassEnvironmentWheel({
                 }}
               />
 
-              {/* Section label: icon + name + percentage, horizontal, outside
-                  the ring. Colour is never the sole section identifier. */}
-              <svg
-                x={iconX}
-                y={iconY}
-                width={iconSize}
-                height={iconSize}
-                className={styles.labelIcon}
-                style={{ color: section.colorVar }}
-                aria-hidden="true"
-              >
-                <SectionIcon iconKey={section.iconKey} size={iconSize} />
-              </svg>
+              {/* Section label: name + percentage, outside the ring. Colour is
+                  never the sole section identifier (name text is always shown). */}
               <text
                 x={anchorPoint.x}
                 y={anchorPoint.y}
@@ -186,15 +174,16 @@ export function ClassEnvironmentWheel({
         />
         <text
           x={CX}
-          y={CY - 8}
+          y={CY - 6}
           textAnchor="middle"
           className={styles.centerScore}
+          style={{ fill: situationColor }}
         >
           {overallScoreDisplay}%
         </text>
         <text
           x={CX}
-          y={CY + 10}
+          y={CY + 8}
           textAnchor="middle"
           className={styles.centerLabelSmall}
         >
@@ -202,9 +191,10 @@ export function ClassEnvironmentWheel({
         </text>
         <text
           x={CX}
-          y={CY + 28}
+          y={CY + 22}
           textAnchor="middle"
           className={styles.centerInterpretation}
+          style={{ fill: situationColor }}
         >
           {overallInterpretationText}
         </text>

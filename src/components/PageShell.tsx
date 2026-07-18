@@ -48,6 +48,11 @@ export async function PageShell({
     <LocaleProvider locale={locale}>
       <div className={styles.shell}>
         <BrandHeader />
+        {showLocaleSwitcher ? (
+          <div className={styles.utilityBar}>
+            <LanguageSwitcher />
+          </div>
+        ) : null}
         <main className={mainClassName}>{children}</main>
         <footer className={styles.footer}>
           <div className={styles.attribution}>
@@ -63,13 +68,9 @@ export async function PageShell({
               unoptimized
             />
           </div>
+          <p className={styles.betaBadge}>{m.footer.betaBadge}</p>
           <p className={styles.footerText}>{m.footer.text}</p>
         </footer>
-        {showLocaleSwitcher ? (
-          <div className={styles.localeBar}>
-            <LanguageSwitcher />
-          </div>
-        ) : null}
       </div>
     </LocaleProvider>
   );

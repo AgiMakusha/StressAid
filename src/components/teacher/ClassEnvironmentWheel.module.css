@@ -7,12 +7,25 @@
 }
 
 /* Scales with the container but stays fully visible/unclipped; the viewBox
-   aspect ratio keeps the donut circular and never forces horizontal scroll. */
+   aspect ratio keeps the donut circular and never forces horizontal scroll.
+   Caps grow with viewport so the wheel reads larger on tablet/desktop. */
 .wheel {
   width: 100%;
-  max-width: 460px;
+  max-width: min(100%, 680px);
   height: auto;
   overflow: visible;
+}
+
+@media (min-width: 900px) {
+  .wheel {
+    max-width: min(100%, 760px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .wheel {
+    max-width: min(100%, 820px);
+  }
 }
 
 .sector {
@@ -65,17 +78,13 @@
   outline: none;
 }
 
-.labelIcon {
-  pointer-events: none;
-}
-
 .labelText {
   pointer-events: none;
   fill: var(--color-text);
 }
 
 .labelName {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: var(--font-weight-medium);
 }
 
@@ -85,7 +94,7 @@
 }
 
 .labelPercent {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: var(--font-weight-bold);
 }
 
@@ -97,7 +106,7 @@
 
 .centerScore {
   fill: var(--color-text);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: var(--font-weight-bold);
 }
 
@@ -110,7 +119,7 @@
 
 .centerInterpretation {
   fill: var(--color-text);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: var(--font-weight-medium);
 }
 
@@ -173,13 +182,21 @@
   }
 }
 
-/* Slightly larger label text on narrow screens keeps names readable. */
+/* On narrow screens keep labels readable without overflowing the viewBox. */
 @media (max-width: 480px) {
   .labelName {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .labelPercent {
-    font-size: 14px;
+    font-size: 15px;
+  }
+
+  .centerScore {
+    font-size: 22px;
+  }
+
+  .centerInterpretation {
+    font-size: 10px;
   }
 }

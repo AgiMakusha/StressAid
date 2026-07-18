@@ -6,17 +6,17 @@ interface SmileIconProps {
 }
 
 /**
- * Calm, child-appropriate face expressions — one per answer value (0–4).
- * Purely decorative: always rendered alongside a visible text label, so the
- * icon is aria-hidden and never the sole carrier of meaning. Colour comes from
- * the parent via `currentColor`; the expression alone distinguishes options.
- *
- * Mouth path progresses from gently downturned (0) to clearly upturned (4).
+ * Answer-scale face for each answer value (0–4), using the official hand-drawn
+ * StressAid student faces from `public/brand/Student`. Files map directly to
+ * value: 0 → "Smile 1" (magenta) … 4 → "Smile 5" (blue). Purely decorative:
+ * always rendered alongside a visible text label, so the icon is aria-hidden
+ * and never the sole carrier of meaning. Rendered via an SVG <image> so it
+ * scales fluidly and stays valid inside both HTML and SVG contexts.
  */
 export function SmileIcon({ value, className }: SmileIconProps) {
   return (
     <svg
-      viewBox="0 0 48 48"
+      viewBox="0 0 100 100"
       width="40"
       height="40"
       className={className}
@@ -24,36 +24,14 @@ export function SmileIcon({ value, className }: SmileIconProps) {
       aria-hidden="true"
       focusable="false"
     >
-      <circle
-        cx="24"
-        cy="24"
-        r="20"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.5"
-      />
-      <circle cx="17" cy="20" r="2.4" fill="currentColor" />
-      <circle cx="31" cy="20" r="2.4" fill="currentColor" />
-      <path
-        d={MOUTH_PATHS[value]}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
+      <image
+        href={`/brand/Student/Smile ${value + 1}.svg`}
+        x="0"
+        y="0"
+        width="100"
+        height="100"
+        preserveAspectRatio="xMidYMid meet"
       />
     </svg>
   );
 }
-
-const MOUTH_PATHS: Record<ResponseValue, string> = {
-  // Never — gently downturned
-  0: "M16 33 Q24 26 32 33",
-  // Rarely — slightly downturned
-  1: "M16 32 Q24 29 32 32",
-  // Sometimes — neutral / straight
-  2: "M16 31 L32 31",
-  // Often — slight smile
-  3: "M16 30 Q24 35 32 30",
-  // Always — clear smile
-  4: "M16 29 Q24 39 32 29",
-};

@@ -22,14 +22,6 @@
   margin: 0;
 }
 
-.betaNotice {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-  background: var(--color-surface-muted, #f7f7f9);
-  font-weight: var(--font-weight-medium);
-}
-
 .signOut,
 .secondaryBtn {
   min-height: 44px;

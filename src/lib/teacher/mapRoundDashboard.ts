@@ -9,6 +9,7 @@
  */
 
 import type { SectionId } from "@/lib/questionnaire";
+import { DEFAULT_LOCALE, getMessages, type Locale } from "@/lib/i18n";
 import type {
   CampaignStatus,
   TeacherDashboardData,
@@ -53,15 +54,23 @@ function statusLabel(status: string): CampaignStatus {
 }
 
 /** Coarse, human wording — never a precise timestamp. */
-function updatedLabel(aggregatesUpdatedOn: string | null): string {
+function updatedLabel(
+  aggregatesUpdatedOn: string | null,
+  locale: Locale,
+): string {
   if (!aggregatesUpdatedOn) {
-    return "Awaiting first responses";
+    return locale === "it"
+      ? "In attesa delle prime risposte"
+      : "Awaiting first responses";
   }
-  return `Updated on ${aggregatesUpdatedOn}`;
+  return locale === "it"
+    ? `Aggiornato il ${aggregatesUpdatedOn}`
+    : `Updated on ${aggregatesUpdatedOn}`;
 }
 
 export function mapRoundDashboard(
   payload: RoundDashboardResponse,
+  locale: Locale = DEFAULT_LOCALE,
 ): TeacherDashboardData {
   const { meta } = payload;
 
@@ -76,8 +85,8 @@ export function mapRoundDashboard(
       status: statusLabel(meta.status),
       responseCount: payload.responseCount,
       minimumResponseThreshold: payload.threshold,
-      lastUpdatedLabel: updatedLabel(meta.aggregatesUpdatedOn),
-      nextCheckInLabel: "Start a new round when you want to reassess this class.",
+      lastUpdatedLabel: updatedLabel(meta.aggregatesUpdatedOn, locale),
+      nextCheckInLabel: getMessages(locale).teacherDashboard.reassessDefault,
     },
   };
 

@@ -7,8 +7,7 @@
  * Values are never logged.
  */
 
-function requireEnv(name: string): string {
-  const value = process.env[name];
+function requireValue(name: string, value: string | undefined): string {
   if (!value || value.trim().length === 0) {
     // Message names the variable only — never its value.
     throw new Error(`Missing required environment variable: ${name}`);
@@ -17,11 +16,19 @@ function requireEnv(name: string): string {
 }
 
 export function getSupabaseUrl(): string {
-  return requireEnv("NEXT_PUBLIC_SUPABASE_URL");
+  // Static literal key so Next.js can inline this into the browser bundle.
+  return requireValue(
+    "NEXT_PUBLIC_SUPABASE_URL",
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+  );
 }
 
 export function getSupabaseAnonKey(): string {
-  return requireEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
+  // Static literal key so Next.js can inline this into the browser bundle.
+  return requireValue(
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
 }
 
 /** Public site URL used for building absolute student links. Falls back to localhost. */

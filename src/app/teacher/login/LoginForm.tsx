@@ -2,12 +2,15 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
+import { getMessages, useLocale } from "@/lib/i18n";
 import { signInAction, type AuthState } from "../auth-actions";
 import styles from "../auth.module.css";
 
 const initialState: AuthState = {};
 
 export function LoginForm() {
+  const locale = useLocale();
+  const m = getMessages(locale).auth;
   const [state, formAction, isPending] = useActionState(
     signInAction,
     initialState,
@@ -17,17 +20,15 @@ export function LoginForm() {
     <section className={styles.card} aria-labelledby="login-heading">
       <div>
         <h1 id="login-heading" className={styles.title}>
-          Teacher sign in
+          {m.signInTitle}
         </h1>
-        <p className={styles.lede}>
-          Sign in to manage your class campaigns and rounds.
-        </p>
+        <p className={styles.lede}>{m.signInLede}</p>
       </div>
 
       <form className={styles.form} action={formAction}>
         <div className={styles.field}>
           <label className={styles.label} htmlFor="email">
-            Email
+            {m.emailLabel}
           </label>
           <input
             className={styles.input}
@@ -41,7 +42,7 @@ export function LoginForm() {
 
         <div className={styles.field}>
           <label className={styles.label} htmlFor="password">
-            Password
+            {m.passwordLabel}
           </label>
           <input
             className={styles.input}
@@ -60,13 +61,13 @@ export function LoginForm() {
         ) : null}
 
         <button className={styles.submit} type="submit" disabled={isPending}>
-          {isPending ? "Signing in…" : "Sign in"}
+          {isPending ? m.signingIn : m.signInButton}
         </button>
       </form>
 
       <p className={styles.altLink}>
-        No account yet?{" "}
-        <Link href="/teacher/signup">Create a teacher test account</Link>
+        {m.noAccountPrompt}{" "}
+        <Link href="/teacher/signup">{m.createAccountLink}</Link>
       </p>
     </section>
   );

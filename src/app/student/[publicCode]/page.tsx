@@ -3,6 +3,8 @@ import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 import { RoundQuestionnaire } from "@/components/student/RoundQuestionnaire";
 import { createClient } from "@/lib/supabase/server";
+import { getMessages, type Locale } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 import styles from "./unavailable.module.css";
 
 export const metadata: Metadata = { title: "Class questionnaire" };
@@ -19,18 +21,20 @@ interface PublicRound {
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-function Unavailable() {
+/**
+ * The unavailable page uses the interface (cookie) language, since a bad or
+ * closed link has no associated campaign language to follow.
+ */
+function Unavailable({ locale }: { locale: Locale }) {
+  const s = getMessages(locale).student;
   return (
     <section className={styles.card} aria-labelledby="unavailable-heading">
       <h1 id="unavailable-heading" className={styles.title}>
-        This questionnaire isn&apos;t available
+        {s.unavailableTitle}
       </h1>
-      <p className={styles.body}>
-        The link may be incomplete, or this round is no longer open. Please
-        check the link your teacher gave you.
-      </p>
+      <p className={styles.body}>{s.unavailableBody}</p>
       <Link href="/" className={styles.homeLink}>
-        Back to home
+        {s.homeLink}
       </Link>
     </section>
   );
@@ -42,11 +46,12 @@ export default async function StudentRoundPage({
   params: Promise<{ publicCode: string }>;
 }) {
   const { publicCode } = await params;
+  const locale = await getLocale();
 
   if (!UUID_RE.test(publicCode)) {
     return (
       <PageShell>
-        <Unavailable />
+        <Unavailable locale={locale} />
       </PageShell>
     );
   }
@@ -61,18 +66,19 @@ export default async function StudentRoundPage({
   if (!round || round.available !== true) {
     return (
       <PageShell>
-        <Unavailable />
+        <Unavailable locale={locale} />
       </PageShell>
     );
   }
 
   return (
-    <PageShell>
+    <PageShell showLocaleSwitcher={false}>
       <RoundQuestionnaire
         publicCode={publicCode}
         title={round.title ?? ""}
         classDisplayName={round.classDisplayName ?? ""}
         roundDisplayName={round.roundDisplayName ?? ""}
+        language={round.language}
       />
     </PageShell>
   );

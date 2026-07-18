@@ -7,6 +7,12 @@ import {
   type TeacherDashboardData,
 } from "@/lib/teacher/types";
 import { buildDashboardView } from "@/lib/teacher/viewModel";
+import {
+  DEFAULT_LOCALE,
+  getMessages,
+  useLocale,
+  type Locale,
+} from "@/lib/i18n";
 import { ClassEnvironmentWheel } from "./ClassEnvironmentWheel";
 import { SectionOverviewList } from "./SectionOverviewList";
 import { SectionDetailPanel } from "./SectionDetailPanel";
@@ -14,15 +20,22 @@ import styles from "./TeacherDashboard.module.css";
 
 interface TeacherDashboardProps {
   data: TeacherDashboardData;
+  /**
+   * Interface language for the teacher dashboard. When omitted the component
+   * reads the current locale from context (falling back to English), so both
+   * server-rendered pages and tests behave correctly.
+   */
+  locale?: Locale;
 }
 
 /**
- * Frontend-only teacher dashboard controller. There is no backend: it renders
- * synthetic demonstration data. Whether results are shown is DERIVED from
+ * Teacher dashboard controller. Whether results are shown is DERIVED from
  * responseCount >= minimumResponseThreshold; below threshold the payload
  * carries no aggregates at all (discriminated union), so nothing can leak.
  */
-export function TeacherDashboard({ data }: TeacherDashboardProps) {
+export function TeacherDashboard({ data, locale }: TeacherDashboardProps) {
+  const contextLocale = useLocale();
+  const activeLocale = locale ?? contextLocale ?? DEFAULT_LOCALE;
   const available = areResultsAvailable(
     data.campaign.responseCount,
     data.campaign.minimumResponseThreshold,
@@ -30,20 +43,28 @@ export function TeacherDashboard({ data }: TeacherDashboardProps) {
 
   return (
     <div className={styles.dashboard}>
-      <DashboardHeader data={data} />
+      <DashboardHeader data={data} locale={activeLocale} />
       {available && data.resultsAvailable ? (
-        <DashboardResults data={data} />
+        <DashboardResults data={data} locale={activeLocale} />
       ) : (
         <ThresholdNotice
           responseCount={data.campaign.responseCount}
           threshold={data.campaign.minimumResponseThreshold}
+          locale={activeLocale}
         />
       )}
     </div>
   );
 }
 
-function DashboardHeader({ data }: { data: TeacherDashboardData }) {
+function DashboardHeader({
+  data,
+  locale,
+}: {
+  data: TeacherDashboardData;
+  locale: Locale;
+}) {
+  const t = getMessages(locale).teacherDashboard;
   const { class: klass, campaign } = data;
   return (
     <header className={styles.header}>
@@ -51,9 +72,7 @@ function DashboardHeader({ data }: { data: TeacherDashboardData }) {
         <div>
           <p className={styles.demoBadge}>
             <span className={styles.demoDot} aria-hidden="true" />
-            {data.isDemo
-              ? "Demo data · Synthetic class example"
-              : "Hackathon beta · synthetic or test data only"}
+            {data.isDemo ? t.demoBadge : t.betaBadge}
           </p>
           <h1 className={styles.className}>{klass.displayName}</h1>
           <p className={styles.campaignTitle}>{campaign.title}</p>
@@ -63,30 +82,30 @@ function DashboardHeader({ data }: { data: TeacherDashboardData }) {
           data-status={campaign.status}
         >
           {campaign.status === "live"
-            ? "Live"
+            ? t.live
             : campaign.status === "closed"
-              ? "Closed"
-              : "Draft"}
+              ? t.closed
+              : t.draft}
         </span>
       </div>
 
       <dl className={styles.metaGrid}>
         <div className={styles.metaItem}>
-          <dt>Responses</dt>
+          <dt>{t.responses}</dt>
           <dd>
             {data.campaign.responseCount} / {klass.expectedStudentCount}
           </dd>
         </div>
         <div className={styles.metaItem}>
-          <dt>Participation</dt>
+          <dt>{t.participation}</dt>
           <dd>{participationPercent(campaign.responseCount, klass.expectedStudentCount)}%</dd>
         </div>
         <div className={styles.metaItem}>
-          <dt>Anonymity threshold</dt>
-          <dd>{campaign.minimumResponseThreshold} responses</dd>
+          <dt>{t.anonymityThreshold}</dt>
+          <dd>{t.thresholdResponsesUnit(campaign.minimumResponseThreshold)}</dd>
         </div>
         <div className={styles.metaItem}>
-          <dt>Last updated</dt>
+          <dt>{t.lastUpdated}</dt>
           <dd>{campaign.lastUpdatedLabel}</dd>
         </div>
       </dl>
@@ -94,8 +113,15 @@ function DashboardHeader({ data }: { data: TeacherDashboardData }) {
   );
 }
 
-function DashboardResults({ data }: { data: Extract<TeacherDashboardData, { resultsAvailable: true }> }) {
-  const view = useMemo(() => buildDashboardView(data), [data]);
+function DashboardResults({
+  data,
+  locale,
+}: {
+  data: Extract<TeacherDashboardData, { resultsAvailable: true }>;
+  locale: Locale;
+}) {
+  const t = getMessages(locale).teacherDashboard;
+  const view = useMemo(() => buildDashboardView(data, locale), [data, locale]);
   const [selectedSectionId, setSelectedSectionId] = useState<SectionId>(
     view.defaultSelectedSectionId,
   );
@@ -111,7 +137,11 @@ function DashboardResults({ data }: { data: Extract<TeacherDashboardData, { resu
         role="status"
         aria-live="polite"
       >
-        {`Selected section: ${selectedSection.name}, ${selectedSection.percentageDisplay} percent, ${selectedSection.interpretationLabelText}.`}
+        {t.selectedSectionStatus(
+          selectedSection.name,
+          selectedSection.percentageDisplay,
+          selectedSection.interpretationLabelText,
+        )}
       </div>
 
       <div className={styles.resultsGrid}>
@@ -122,13 +152,15 @@ function DashboardResults({ data }: { data: Extract<TeacherDashboardData, { resu
             onSelect={setSelectedSectionId}
             overallScoreDisplay={view.overallScoreDisplay}
             overallInterpretationText={view.overallInterpretationText}
+            locale={locale}
           />
           <div className={styles.overviewCard}>
-            <h2 className={styles.sectionHeading}>Section overview</h2>
+            <h2 className={styles.sectionHeading}>{t.sectionOverview}</h2>
             <SectionOverviewList
               sections={view.sections}
               selectedSectionId={selectedSectionId}
               onSelect={setSelectedSectionId}
+              locale={locale}
             />
           </div>
         </div>
@@ -137,6 +169,8 @@ function DashboardResults({ data }: { data: Extract<TeacherDashboardData, { resu
           <SectionDetailPanel
             section={selectedSection}
             nextCheckInLabel={data.campaign.nextCheckInLabel}
+            reviewNote={view.responsibleReviewNote}
+            locale={locale}
           />
         </div>
       </div>
@@ -147,29 +181,23 @@ function DashboardResults({ data }: { data: Extract<TeacherDashboardData, { resu
 function ThresholdNotice({
   responseCount,
   threshold,
+  locale,
 }: {
   responseCount: number;
   threshold: number;
+  locale: Locale;
 }) {
+  const t = getMessages(locale).teacherDashboard;
   const remaining = Math.max(threshold - responseCount, 0);
   return (
     <section className={styles.notice} aria-labelledby="threshold-heading">
       <h2 id="threshold-heading" className={styles.noticeTitle}>
-        Results are not available yet
+        {t.thresholdNoticeTitle}
       </h2>
       <p className={styles.noticeBody}>
-        To protect student anonymity, collective results are shown only once at
-        least {threshold} responses have been received. This class currently has{" "}
-        {responseCount}{" "}
-        {responseCount === 1 ? "response" : "responses"}.
+        {t.thresholdNoticeBody(threshold, responseCount)}
       </p>
-      <p className={styles.noticeBody}>
-        {remaining === 1
-          ? "1 more response is needed before results can be shown."
-          : `${remaining} more responses are needed before results can be shown.`}{" "}
-        No section averages, distributions, interpretations, or the Class
-        Environment Wheel are available until then.
-      </p>
+      <p className={styles.noticeBody}>{t.thresholdRemaining(remaining)}</p>
     </section>
   );
 }

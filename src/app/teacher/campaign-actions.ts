@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getMessages } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 
 export interface CreateCampaignState {
   error?: string;
@@ -23,6 +25,7 @@ export async function createCampaignAction(
   _prev: CreateCampaignState,
   formData: FormData,
 ): Promise<CreateCampaignState> {
+  const d = getMessages(await getLocale()).dashboard;
   const title = String(formData.get("title") ?? "").trim();
   const className = String(formData.get("className") ?? "").trim();
   const expected = Number(formData.get("expected") ?? NaN);
@@ -30,21 +33,19 @@ export async function createCampaignAction(
   const language = String(formData.get("language") ?? "en");
 
   if (!title || !className) {
-    return { error: "Please provide a title and a class name." };
+    return { error: d.errorTitleClass };
   }
   if (!Number.isInteger(expected) || expected <= 0) {
-    return { error: "Expected participants must be a positive whole number." };
+    return { error: d.errorExpected };
   }
   if (!Number.isInteger(threshold) || threshold < 10 || threshold > 1000) {
-    return { error: "Anonymity threshold must be between 10 and 1000." };
+    return { error: d.errorThresholdRange };
   }
   if (threshold > expected) {
-    return {
-      error: "Anonymity threshold cannot exceed expected participants.",
-    };
+    return { error: d.errorThresholdExceedsExpected };
   }
   if (language !== "en" && language !== "it") {
-    return { error: "Choose a supported language." };
+    return { error: d.errorLanguage };
   }
 
   const supabase = await requireUserClient();
@@ -57,7 +58,7 @@ export async function createCampaignAction(
   });
 
   if (error) {
-    return { error: "We couldn't create the campaign. Please try again." };
+    return { error: d.errorCreateFailed };
   }
 
   revalidatePath("/teacher/dashboard");

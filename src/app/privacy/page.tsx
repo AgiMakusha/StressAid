@@ -1,30 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
+import { getMessages } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Privacy",
 };
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  const locale = await getLocale();
+  const m = getMessages(locale).privacy;
+
   return (
     <PageShell>
-      <h1>Privacy</h1>
+      <h1>{m.title}</h1>
+      <p>{m.p1}</p>
+      <p>{m.p2}</p>
+      <p>{m.p3}</p>
       <p>
-        StressAid is designed to be privacy-first. It does not ask for a
-        student&apos;s name, email, student ID, date of birth, or any other
-        identifying information.
-      </p>
-      <p>
-        Answers are combined at class level and shown to teachers only as
-        collective signals. Individual responses are never shown.
-      </p>
-      <p>
-        This is a placeholder page. The full child-friendly notice and adult
-        privacy information will be added in a later step.
-      </p>
-      <p>
-        <Link href="/">Back to home</Link>
+        <Link href="/">{m.backToHome}</Link>
       </p>
     </PageShell>
   );

@@ -1,5 +1,10 @@
 import { ANSWER_OPTIONS, type ResponseValue } from "@/lib/questionnaire";
-import { studentCopy } from "@/lib/studentCopy";
+import {
+  DEFAULT_LOCALE,
+  getAnswerLabel,
+  getStudentCopy,
+  type Locale,
+} from "@/lib/i18n";
 import { SmileIcon } from "./SmileIcon";
 import styles from "./AnswerScale.module.css";
 
@@ -11,6 +16,8 @@ interface AnswerScaleProps {
   /** Currently selected value, or null if unanswered. */
   value: ResponseValue | null;
   onChange: (value: ResponseValue) => void;
+  /** Language of the answer labels (campaign/round language). */
+  locale?: Locale;
 }
 
 /**
@@ -24,11 +31,13 @@ export function AnswerScale({
   name,
   value,
   onChange,
+  locale = DEFAULT_LOCALE,
 }: AnswerScaleProps) {
+  const copy = getStudentCopy(locale);
   return (
     <fieldset className={styles.fieldset} aria-labelledby={questionHeadingId}>
       <legend className={styles.visuallyHiddenLegend}>
-        {studentCopy.questions.answerGroupLabel}
+        {copy.questions.answerGroupLabel}
       </legend>
       <div className={styles.options}>
         {ANSWER_OPTIONS.map((option) => {
@@ -51,7 +60,9 @@ export function AnswerScale({
               <span className={styles.icon}>
                 <SmileIcon value={option.value} />
               </span>
-              <span className={styles.label}>{option.label}</span>
+              <span className={styles.label}>
+                {getAnswerLabel(locale, option.id)}
+              </span>
               <span className={styles.check} aria-hidden="true">
                 {selected ? "✓" : ""}
               </span>

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { QuestionSection, ResponseValue } from "@/lib/questionnaire";
-import { studentCopy } from "@/lib/studentCopy";
+import { DEFAULT_LOCALE, getStudentCopy, type Locale } from "@/lib/i18n";
 import { AnswerScale } from "./AnswerScale";
 import { ProgressIndicator } from "./ProgressIndicator";
 import styles from "./QuestionCard.module.css";
@@ -20,6 +20,8 @@ interface QuestionCardProps {
   onSubmit: () => void;
   /** When true, the final submit control is disabled (submission in flight). */
   submitting?: boolean;
+  /** Language of the questionnaire content (campaign/round language). */
+  locale?: Locale;
 }
 
 const QUESTION_HEADING_ID = "question-heading";
@@ -41,7 +43,9 @@ export function QuestionCard({
   onNext,
   onSubmit,
   submitting = false,
+  locale = DEFAULT_LOCALE,
 }: QuestionCardProps) {
+  const copy = getStudentCopy(locale);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   // Move focus to the question heading whenever the question changes.
@@ -53,7 +57,7 @@ export function QuestionCard({
 
   return (
     <section className={styles.card} aria-labelledby={QUESTION_HEADING_ID}>
-      <ProgressIndicator current={index + 1} total={total} />
+      <ProgressIndicator current={index + 1} total={total} locale={locale} />
 
       <p className={styles.sectionName}>{section.name}</p>
       <h2
@@ -70,11 +74,12 @@ export function QuestionCard({
         name="student-answer"
         value={value}
         onChange={onChange}
+        locale={locale}
       />
 
       <div className={styles.controls}>
         <button type="button" className={styles.back} onClick={onBack}>
-          {studentCopy.questions.back}
+          {copy.questions.back}
         </button>
         {isLast ? (
           <button
@@ -83,7 +88,7 @@ export function QuestionCard({
             onClick={onSubmit}
             disabled={nextDisabled || submitting}
           >
-            {submitting ? "Sending…" : studentCopy.questions.submit}
+            {submitting ? copy.questions.sending : copy.questions.submit}
           </button>
         ) : (
           <button
@@ -92,7 +97,7 @@ export function QuestionCard({
             onClick={onNext}
             disabled={nextDisabled}
           >
-            {studentCopy.questions.next}
+            {copy.questions.next}
           </button>
         )}
       </div>

@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import type { CampaignSummary } from "@/lib/teacher/campaignTypes";
 import { studentLink } from "@/lib/teacher/campaignTypes";
+import { getMessages, useLocale } from "@/lib/i18n";
 import { signOutAction } from "../auth-actions";
 import {
   createCampaignAction,
@@ -26,6 +27,8 @@ export function CampaignManager({
   siteUrl,
   userEmail,
 }: CampaignManagerProps) {
+  const locale = useLocale();
+  const d = getMessages(locale).dashboard;
   const [createState, createAction, creating] = useActionState(
     createCampaignAction,
     initialCreateState,
@@ -35,30 +38,28 @@ export function CampaignManager({
     <div className={styles.wrap}>
       <div className={styles.topBar}>
         <div>
-          <h1 className={styles.heading}>Your campaigns</h1>
+          <h1 className={styles.heading}>{d.yourCampaigns}</h1>
           {userEmail ? (
-            <p className={styles.userLine}>Signed in as {userEmail}</p>
+            <p className={styles.userLine}>{d.signedInAs(userEmail)}</p>
           ) : null}
         </div>
         <form action={signOutAction}>
           <button type="submit" className={styles.signOut}>
-            Sign out
+            {d.signOut}
           </button>
         </form>
       </div>
 
-      <p className={styles.betaNotice}>
-        Hackathon beta — use synthetic or test data only.
-      </p>
+      <p className={styles.betaNotice}>{d.betaNotice}</p>
 
       <section className={styles.panel} aria-labelledby="create-heading">
         <h2 id="create-heading" className={styles.panelTitle}>
-          Create campaign
+          {d.createCampaign}
         </h2>
         <form className={styles.form} action={createAction}>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="title">
-              Title
+              {d.titleLabel}
             </label>
             <input
               className={styles.input}
@@ -71,7 +72,7 @@ export function CampaignManager({
           </div>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="className">
-              Class name
+              {d.classNameLabel}
             </label>
             <input
               className={styles.input}
@@ -84,7 +85,7 @@ export function CampaignManager({
           </div>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="expected">
-              Expected participants
+              {d.expectedLabel}
             </label>
             <input
               className={styles.input}
@@ -98,7 +99,7 @@ export function CampaignManager({
           </div>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="threshold">
-              Anonymity threshold
+              {d.thresholdLabel}
             </label>
             <input
               className={styles.input}
@@ -113,7 +114,7 @@ export function CampaignManager({
           </div>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="language">
-              Language
+              {d.languageLabel}
             </label>
             <select
               className={styles.select}
@@ -121,8 +122,8 @@ export function CampaignManager({
               name="language"
               defaultValue="en"
             >
-              <option value="en">English</option>
-              <option value="it">Italian</option>
+              <option value="en">{d.langEnglish}</option>
+              <option value="it">{d.langItalian}</option>
             </select>
           </div>
           <div className={styles.formActions}>
@@ -136,17 +137,14 @@ export function CampaignManager({
               className={styles.primaryBtn}
               disabled={creating}
             >
-              {creating ? "Creating…" : "Create campaign"}
+              {creating ? d.creating : d.createCampaign}
             </button>
           </div>
         </form>
       </section>
 
       {campaigns.length === 0 ? (
-        <p className={styles.empty}>
-          You have no campaigns yet. Create one above to get your first round
-          and student link.
-        </p>
+        <p className={styles.empty}>{d.noCampaigns}</p>
       ) : (
         <ul className={styles.campaignList}>
           {campaigns.map((campaign) => (
@@ -154,9 +152,11 @@ export function CampaignManager({
               <div>
                 <h2 className={styles.campaignTitle}>{campaign.title}</h2>
                 <p className={styles.campaignMeta}>
-                  {campaign.classDisplayName} · threshold{" "}
-                  {campaign.minimumResponseThreshold} · expected{" "}
-                  {campaign.expectedParticipantCount}
+                  {d.campaignMeta(
+                    campaign.classDisplayName,
+                    campaign.minimumResponseThreshold,
+                    campaign.expectedParticipantCount,
+                  )}
                 </p>
               </div>
 
@@ -167,16 +167,16 @@ export function CampaignManager({
                   name="displayName"
                   type="text"
                   maxLength={80}
-                  placeholder="New round name (optional)"
-                  aria-label="New round name"
+                  placeholder={d.startRoundPlaceholder}
+                  aria-label={d.startRoundAria}
                 />
                 <button type="submit" className={styles.primaryBtn}>
-                  Start new round
+                  {d.startNewRound}
                 </button>
               </form>
 
               {campaign.rounds.length === 0 ? (
-                <p className={styles.empty}>No rounds yet.</p>
+                <p className={styles.empty}>{d.noRounds}</p>
               ) : (
                 <ul className={styles.roundList}>
                   {campaign.rounds.map((round) => (
@@ -189,12 +189,12 @@ export function CampaignManager({
                           className={styles.statusChip}
                           data-status={round.status}
                         >
-                          {round.status === "live" ? "Live" : "Closed"}
+                          {round.status === "live" ? d.live : d.closed}
                         </span>
                       </div>
 
                       <p className={styles.campaignMeta}>
-                        {round.responseCount} responses
+                        {d.responses(round.responseCount)}
                       </p>
 
                       <div className={styles.linkRow}>
@@ -203,6 +203,8 @@ export function CampaignManager({
                         </span>
                         <CopyLinkButton
                           value={studentLink(siteUrl, round.publicCode)}
+                          copyLabel={d.copyStudentLink}
+                          copiedLabel={d.copied}
                         />
                       </div>
 
@@ -211,7 +213,7 @@ export function CampaignManager({
                           href={`/teacher/rounds/${round.id}`}
                           className={styles.secondaryBtn}
                         >
-                          Open results
+                          {d.openResults}
                         </Link>
                         <form action={setRoundStatusAction}>
                           <input
@@ -226,8 +228,8 @@ export function CampaignManager({
                           />
                           <button type="submit" className={styles.secondaryBtn}>
                             {round.status === "live"
-                              ? "Close round"
-                              : "Reopen round"}
+                              ? d.closeRound
+                              : d.reopenRound}
                           </button>
                         </form>
                       </div>
@@ -243,7 +245,15 @@ export function CampaignManager({
   );
 }
 
-function CopyLinkButton({ value }: { value: string }) {
+function CopyLinkButton({
+  value,
+  copyLabel,
+  copiedLabel,
+}: {
+  value: string;
+  copyLabel: string;
+  copiedLabel: string;
+}) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
@@ -258,7 +268,7 @@ function CopyLinkButton({ value }: { value: string }) {
 
   return (
     <button type="button" className={styles.secondaryBtn} onClick={copy}>
-      {copied ? "Copied!" : "Copy student link"}
+      {copied ? copiedLabel : copyLabel}
     </button>
   );
 }

@@ -1,6 +1,5 @@
 import type { SectionView } from "@/lib/teacher/viewModel";
-import { studentsLabel } from "@/lib/teacher/viewModel";
-import { RESPONSIBLE_REVIEW_NOTE } from "@/lib/teacher/interventions";
+import { DEFAULT_LOCALE, getMessages, type Locale } from "@/lib/i18n";
 import { SectionIcon } from "./SectionIcon";
 import { DistributionTable } from "./ResponseDistribution";
 import styles from "./SectionDetailPanel.module.css";
@@ -16,10 +15,15 @@ import styles from "./SectionDetailPanel.module.css";
 export function SectionDetailPanel({
   section,
   nextCheckInLabel,
+  reviewNote,
+  locale = DEFAULT_LOCALE,
 }: {
   section: SectionView;
   nextCheckInLabel: string;
+  reviewNote: string;
+  locale?: Locale;
 }) {
+  const t = getMessages(locale).teacherDashboard;
   return (
     <section className={styles.panel} aria-labelledby="section-detail-heading">
       <header className={styles.header}>
@@ -39,33 +43,33 @@ export function SectionDetailPanel({
 
       <dl className={styles.metrics}>
         <div className={styles.metric}>
-          <dt>Section percentage</dt>
+          <dt>{t.sectionPercentage}</dt>
           <dd>{section.percentageDisplay}%</dd>
         </div>
         <div className={styles.metric}>
-          <dt>Raw average (0–4)</dt>
+          <dt>{t.rawAverage}</dt>
           <dd>{section.rawAverageDisplay}</dd>
         </div>
         <div className={styles.metric}>
-          <dt>Valid responses</dt>
-          <dd>{studentsLabel(section.validResponses)}</dd>
+          <dt>{t.validResponses}</dt>
+          <dd>{section.validResponsesLabel}</dd>
         </div>
       </dl>
 
       <div className={styles.block}>
-        <DistributionTable categories={section.categories} />
+        <DistributionTable categories={section.categories} locale={locale} />
       </div>
 
       <div className={styles.block}>
-        <h4 className={styles.blockTitle}>Collective interpretation</h4>
+        <h4 className={styles.blockTitle}>{t.collectiveInterpretation}</h4>
         <p className={styles.interpretation}>
           {section.collectiveInterpretation}
         </p>
-        <p className={styles.reviewNote}>{RESPONSIBLE_REVIEW_NOTE}</p>
+        <p className={styles.reviewNote}>{reviewNote}</p>
       </div>
 
       <div className={styles.block}>
-        <h4 className={styles.blockTitle}>Suggested actions</h4>
+        <h4 className={styles.blockTitle}>{t.suggestedActions}</h4>
         <ul className={styles.actions}>
           {section.actions.map((action) => (
             <li key={action}>{action}</li>

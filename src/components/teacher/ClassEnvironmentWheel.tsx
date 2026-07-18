@@ -3,6 +3,7 @@
 import { SectionIcon } from "./SectionIcon";
 import type { SectionView } from "@/lib/teacher/viewModel";
 import type { SectionId } from "@/lib/questionnaire";
+import { DEFAULT_LOCALE, getMessages, type Locale } from "@/lib/i18n";
 import {
   annularSectorPath,
   computeRadialBands,
@@ -18,6 +19,7 @@ interface ClassEnvironmentWheelProps {
   onSelect: (id: SectionId) => void;
   overallScoreDisplay: number;
   overallInterpretationText: string;
+  locale?: Locale;
 }
 
 /* Layout constants. The viewBox leaves generous horizontal room so section
@@ -38,14 +40,16 @@ export function ClassEnvironmentWheel({
   onSelect,
   overallScoreDisplay,
   overallInterpretationText,
+  locale = DEFAULT_LOCALE,
 }: ClassEnvironmentWheelProps) {
+  const t = getMessages(locale).teacherDashboard;
   return (
     <div className={styles.wheelWrap}>
       <svg
         viewBox={`0 0 ${VB_WIDTH} ${VB_HEIGHT}`}
         className={styles.wheel}
         role="group"
-        aria-label="Class Environment Wheel. Six equal sections; each shows its response distribution from Never at the centre to Always at the outer edge. Select a section to view details."
+        aria-label={t.wheelAriaLabel}
       >
         {sections.map((section, index) => {
           const isSelected = section.id === selectedSectionId;
@@ -87,7 +91,10 @@ export function ClassEnvironmentWheel({
           const iconY = round(anchorPoint.y - iconSize - 16);
 
           const distributionDescription = section.categories
-            .map((category) => `${category.label} ${category.percentageDisplay} percent`)
+            .map(
+              (category) =>
+                `${category.label} ${category.percentageDisplay} ${t.percentWord}`,
+            )
             .join(", ");
 
           return (
@@ -126,7 +133,7 @@ export function ClassEnvironmentWheel({
                 role="button"
                 tabIndex={0}
                 aria-pressed={isSelected}
-                aria-label={`${section.name}, ${section.percentageDisplay} percent, ${section.interpretationLabelText}. ${distributionDescription}. Select section.`}
+                aria-label={`${section.name}, ${section.percentageDisplay} ${t.percentWord}, ${section.interpretationLabelText}. ${distributionDescription}. ${t.selectSection}`}
                 onClick={() => onSelect(section.id)}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" || event.key === " ") {
@@ -191,7 +198,7 @@ export function ClassEnvironmentWheel({
           textAnchor="middle"
           className={styles.centerLabelSmall}
         >
-          Overall
+          {t.overall}
         </text>
         <text
           x={CX}
@@ -203,7 +210,10 @@ export function ClassEnvironmentWheel({
         </text>
       </svg>
 
-      <ResponseScaleLegend categories={sections[0]?.categories ?? []} />
+      <ResponseScaleLegend
+        categories={sections[0]?.categories ?? []}
+        locale={locale}
+      />
     </div>
   );
 }
@@ -215,13 +225,16 @@ export function ClassEnvironmentWheel({
  */
 function ResponseScaleLegend({
   categories,
+  locale = DEFAULT_LOCALE,
 }: {
   categories: SectionView["categories"];
+  locale?: Locale;
 }) {
+  const t = getMessages(locale).teacherDashboard;
   return (
     <div className={styles.legend}>
-      <p className={styles.legendHeading}>Response distribution</p>
-      <p className={styles.legendSub}>From the centre outward</p>
+      <p className={styles.legendHeading}>{t.responseDistribution}</p>
+      <p className={styles.legendSub}>{t.fromCentreOutward}</p>
       <ol className={styles.legendList}>
         {categories.map((category, index) => (
           <li key={category.key} className={styles.legendItem}>
@@ -232,9 +245,9 @@ function ResponseScaleLegend({
             />
             <span className={styles.legendLabel}>{category.label}</span>
             {index === 0 ? (
-              <span className={styles.legendHint}>innermost</span>
+              <span className={styles.legendHint}>{t.innermost}</span>
             ) : index === categories.length - 1 ? (
-              <span className={styles.legendHint}>outermost</span>
+              <span className={styles.legendHint}>{t.outermost}</span>
             ) : null}
           </li>
         ))}

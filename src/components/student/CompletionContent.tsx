@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { studentCopy } from "@/lib/studentCopy";
+import { DEFAULT_LOCALE, getStudentCopy, type Locale } from "@/lib/i18n";
 import styles from "./CompletionContent.module.css";
 
 /**
@@ -13,8 +13,12 @@ import styles from "./CompletionContent.module.css";
  * — shown only here, never on the welcome or question screens. The link returns
  * to the landing page, never back into the completed questionnaire.
  */
-export function CompletionContent() {
-  const { completion } = studentCopy;
+export function CompletionContent({
+  locale = DEFAULT_LOCALE,
+}: {
+  locale?: Locale;
+} = {}) {
+  const { completion } = getStudentCopy(locale);
 
   return (
     <section className={styles.card} aria-labelledby="completion-heading">

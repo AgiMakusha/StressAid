@@ -2,6 +2,7 @@
 
 import type { SectionView } from "@/lib/teacher/viewModel";
 import type { SectionId } from "@/lib/questionnaire";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 import { SectionIcon } from "./SectionIcon";
 import { DistributionBar } from "./ResponseDistribution";
 import styles from "./SectionOverviewList.module.css";
@@ -10,6 +11,7 @@ interface SectionOverviewListProps {
   sections: SectionView[];
   selectedSectionId: SectionId;
   onSelect: (id: SectionId) => void;
+  locale?: Locale;
 }
 
 /**
@@ -23,6 +25,7 @@ export function SectionOverviewList({
   sections,
   selectedSectionId,
   onSelect,
+  locale = DEFAULT_LOCALE,
 }: SectionOverviewListProps) {
   return (
     <ul className={styles.list}>
@@ -53,7 +56,10 @@ export function SectionOverviewList({
                 <span className={styles.interpretation}>
                   {section.interpretationLabelText}
                 </span>
-                <DistributionBar categories={section.categories} />
+                <DistributionBar
+                  categories={section.categories}
+                  locale={locale}
+                />
               </span>
             </button>
           </li>

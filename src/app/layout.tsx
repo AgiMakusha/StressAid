@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { LocaleProvider } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: {
@@ -17,12 +19,15 @@ export const viewport: Viewport = {
   themeColor: "#081c2c",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang={locale}>
+      <body>
+        <LocaleProvider locale={locale}>{children}</LocaleProvider>
+      </body>
     </html>
   );
 }

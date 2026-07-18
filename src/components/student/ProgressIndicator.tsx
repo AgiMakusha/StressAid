@@ -1,10 +1,11 @@
-import { studentCopy } from "@/lib/studentCopy";
+import { DEFAULT_LOCALE, getStudentCopy, type Locale } from "@/lib/i18n";
 import styles from "./ProgressIndicator.module.css";
 
 interface ProgressIndicatorProps {
   /** 1-based current question number. */
   current: number;
   total: number;
+  locale?: Locale;
 }
 
 /**
@@ -12,8 +13,12 @@ interface ProgressIndicatorProps {
  * to assistive tech via an aria-live polite region so screen-reader users hear
  * progress changes as they navigate.
  */
-export function ProgressIndicator({ current, total }: ProgressIndicatorProps) {
-  const label = studentCopy.questions.progress(current, total);
+export function ProgressIndicator({
+  current,
+  total,
+  locale = DEFAULT_LOCALE,
+}: ProgressIndicatorProps) {
+  const label = getStudentCopy(locale).questions.progress(current, total);
   const percent = Math.round((current / total) * 100);
 
   return (

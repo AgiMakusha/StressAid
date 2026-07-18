@@ -7,6 +7,13 @@ import {
   type ResponseValue,
 } from "@/lib/questionnaire";
 import { createClient } from "@/lib/supabase/client";
+import {
+  DEFAULT_LOCALE,
+  getMessages,
+  getQuestion,
+  getSectionName,
+  resolveLocale,
+} from "@/lib/i18n";
 import { WelcomeCard } from "./WelcomeCard";
 import { QuestionCard } from "./QuestionCard";
 import { CompletionContent } from "./CompletionContent";
@@ -17,6 +24,11 @@ interface RoundQuestionnaireProps {
   title: string;
   classDisplayName: string;
   roundDisplayName: string;
+  /**
+   * Campaign/round language. The student questionnaire always follows this,
+   * never the global interface switcher. Invalid values fall back to English.
+   */
+  language?: string;
 }
 
 type Phase = "welcome" | "questions" | "complete";
@@ -38,7 +50,9 @@ export function RoundQuestionnaire({
   title,
   classDisplayName,
   roundDisplayName,
+  language,
 }: RoundQuestionnaireProps) {
+  const locale = language ? resolveLocale(language) : DEFAULT_LOCALE;
   const [phase, setPhase] = useState<Phase>("welcome");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>(createEmptyAnswers);
@@ -88,9 +102,7 @@ export function RoundQuestionnaire({
       );
 
       if (rpcError || !data || (data as { success?: boolean }).success !== true) {
-        setError(
-          "We couldn't send your answers. Please check your connection and try again.",
-        );
+        setError(getMessages(locale).student.submitError);
         return;
       }
 
@@ -98,9 +110,7 @@ export function RoundQuestionnaire({
       setCurrentIndex(0);
       setPhase("complete");
     } catch {
-      setError(
-        "We couldn't send your answers. Please check your connection and try again.",
-      );
+      setError(getMessages(locale).student.submitError);
     } finally {
       inFlight.current = false;
       setSubmitting(false);
@@ -108,7 +118,7 @@ export function RoundQuestionnaire({
   };
 
   if (phase === "complete") {
-    return <CompletionContent />;
+    return <CompletionContent locale={locale} />;
   }
 
   if (phase === "welcome") {
@@ -117,12 +127,17 @@ export function RoundQuestionnaire({
         <p className={styles.context}>
           {title} · {classDisplayName} · {roundDisplayName}
         </p>
-        <WelcomeCard onStart={() => setPhase("questions")} />
+        <WelcomeCard onStart={() => setPhase("questions")} locale={locale} />
       </div>
     );
   }
 
-  const section = QUESTIONNAIRE[currentIndex];
+  const base = QUESTIONNAIRE[currentIndex];
+  const section = {
+    ...base,
+    name: getSectionName(locale, base.id),
+    question: getQuestion(locale, base.id),
+  };
 
   return (
     <div className={styles.wrap}>
@@ -137,6 +152,7 @@ export function RoundQuestionnaire({
         onNext={goNext}
         onSubmit={submit}
         submitting={submitting}
+        locale={locale}
       />
       {error ? (
         <p className={styles.error} role="alert">

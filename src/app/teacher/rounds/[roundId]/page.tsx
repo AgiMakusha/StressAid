@@ -8,6 +8,8 @@ import {
   mapRoundDashboard,
   type RoundDashboardResponse,
 } from "@/lib/teacher/mapRoundDashboard";
+import { getMessages } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 import { setRoundStatusAction } from "../../campaign-actions";
 import { RefreshButton } from "./RefreshButton";
 import styles from "./round.module.css";
@@ -21,6 +23,8 @@ export default async function RoundResultsPage({
   params: Promise<{ roundId: string }>;
 }) {
   const { roundId } = await params;
+  const locale = await getLocale();
+  const r = getMessages(locale).roundResults;
 
   const supabase = await createClient();
   const {
@@ -38,13 +42,10 @@ export default async function RoundResultsPage({
     return (
       <PageShell variant="wide">
         <div className={styles.notFound}>
-          <h1>Results unavailable</h1>
-          <p>
-            This round could not be found, or it does not belong to your
-            account.
-          </p>
+          <h1>{r.unavailableTitle}</h1>
+          <p>{r.unavailableBody}</p>
           <Link href="/teacher/dashboard" className={styles.btn}>
-            Back to campaigns
+            {r.backToCampaigns}
           </Link>
         </div>
       </PageShell>
@@ -52,7 +53,7 @@ export default async function RoundResultsPage({
   }
 
   const payload = data as unknown as RoundDashboardResponse;
-  const dashboardData = mapRoundDashboard(payload);
+  const dashboardData = mapRoundDashboard(payload, locale);
   const { meta } = payload;
   const isLive = meta.status === "live";
 
@@ -65,7 +66,7 @@ export default async function RoundResultsPage({
           </h1>
           <div className={styles.actions}>
             <Link href="/teacher/dashboard" className={styles.btn}>
-              Back to campaigns
+              {r.backToCampaigns}
             </Link>
             <RefreshButton className={styles.btn} />
             <form action={setRoundStatusAction}>
@@ -76,14 +77,14 @@ export default async function RoundResultsPage({
                 value={isLive ? "closed" : "live"}
               />
               <button type="submit" className={styles.btn}>
-                {isLive ? "Close round" : "Reopen round"}
+                {isLive ? r.closeRound : r.reopenRound}
               </button>
             </form>
           </div>
         </div>
       </div>
 
-      <TeacherDashboard data={dashboardData} />
+      <TeacherDashboard data={dashboardData} locale={locale} />
     </PageShell>
   );
 }

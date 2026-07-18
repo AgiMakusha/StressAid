@@ -1,5 +1,9 @@
 import type { CategoryView } from "@/lib/teacher/viewModel";
-import { studentsLabel } from "@/lib/teacher/viewModel";
+import {
+  DEFAULT_LOCALE,
+  getMessages,
+  type Locale,
+} from "@/lib/i18n";
 import styles from "./ResponseDistribution.module.css";
 
 /**
@@ -10,9 +14,12 @@ import styles from "./ResponseDistribution.module.css";
  */
 export function DistributionBar({
   categories,
+  locale = DEFAULT_LOCALE,
 }: {
   categories: CategoryView[];
+  locale?: Locale;
 }) {
+  const percentWord = getMessages(locale).teacherDashboard.percentWord;
   return (
     <div
       className={styles.bar}
@@ -20,7 +27,7 @@ export function DistributionBar({
       aria-label={categories
         .map(
           (category) =>
-            `${category.label}: ${category.count} (${category.percentageDisplay} percent)`,
+            `${category.label}: ${category.count} (${category.percentageDisplay} ${percentWord})`,
         )
         .join(", ")}
     >
@@ -47,14 +54,15 @@ export function DistributionBar({
  */
 export function DistributionTable({
   categories,
+  locale = DEFAULT_LOCALE,
 }: {
   categories: CategoryView[];
+  locale?: Locale;
 }) {
+  const t = getMessages(locale).teacherDashboard;
   return (
     <table className={styles.table}>
-      <caption className={styles.caption}>
-        Response distribution by answer category
-      </caption>
+      <caption className={styles.caption}>{t.distributionCaption}</caption>
       <colgroup>
         <col className={styles.answerCol} />
         <col className={styles.numCol} />
@@ -62,9 +70,9 @@ export function DistributionTable({
       </colgroup>
       <thead>
         <tr>
-          <th scope="col">Answer</th>
-          <th scope="col">Responses</th>
-          <th scope="col">Percentage</th>
+          <th scope="col">{t.colAnswer}</th>
+          <th scope="col">{t.colResponses}</th>
+          <th scope="col">{t.colPercentage}</th>
         </tr>
       </thead>
       <tbody>
@@ -78,7 +86,7 @@ export function DistributionTable({
               />
               {category.label}
             </th>
-            <td>{studentsLabel(category.count)}</td>
+            <td>{category.countLabel}</td>
             <td>{category.percentageDisplay}%</td>
           </tr>
         ))}

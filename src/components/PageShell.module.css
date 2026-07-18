@@ -4,6 +4,17 @@
   min-height: 100dvh;
 }
 
+/* Top utility bar holding the interface-language switcher, aligned to the
+   right within the content column. */
+.utilityBar {
+  width: 100%;
+  max-width: var(--content-max-width-wide);
+  margin: 0 auto;
+  padding: var(--space-3) var(--shell-padding-inline) 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .main {
   flex: 1 1 auto;
   width: 100%;

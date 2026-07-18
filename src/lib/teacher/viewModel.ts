@@ -5,21 +5,30 @@
  * percentage; rounding lives only in the formatting fields used for display.
  */
 
-import type { SectionId } from "@/lib/questionnaire";
+import type { AnswerOptionId, SectionId } from "@/lib/questionnaire";
 import {
   DISTRIBUTION_CATEGORIES,
   categoryPercentage,
   formatRawAverage,
   interpretationLabel,
-  interpretationText,
   lowestScoringSectionId,
   overallScore,
   rawAverage,
   roundPercentage,
   sectionPercentage,
 } from "./scoring";
-import { sectionActions, sectionInterpretationText } from "./interventions";
 import { getSectionMeta } from "./sections";
+import {
+  DEFAULT_LOCALE,
+  getAnswerLabel,
+  getInterpretationLabelText,
+  getResponsibleReviewNote,
+  getSectionActions,
+  getSectionInterpretation,
+  getSectionName,
+  getStudentsLabel,
+  type Locale,
+} from "@/lib/i18n";
 import type {
   InterpretationLabelId,
   ThresholdReachedDashboard,
@@ -30,6 +39,8 @@ export interface CategoryView {
   label: string;
   colorVar: string;
   count: number;
+  /** Localised count label, e.g. "5 students" / "5 studenti". */
+  countLabel: string;
   /** Full-precision percentage of the section total. */
   percentage: number;
   /** Display string with one decimal, e.g. "27.8". */
@@ -42,6 +53,8 @@ export interface SectionView {
   colorVar: string;
   iconKey: ReturnType<typeof getSectionMeta>["iconKey"];
   validResponses: number;
+  /** Localised valid-response label, e.g. "18 students" / "18 studenti". */
+  validResponsesLabel: string;
   /** Full-precision values. */
   rawAverage: number;
   percentage: number;
@@ -62,12 +75,21 @@ export interface DashboardView {
   overallScoreDisplay: number;
   overallLabelId: InterpretationLabelId;
   overallInterpretationText: string;
+  /** Localised shared caution shown with every section's interpretation. */
+  responsibleReviewNote: string;
   /** Dynamically the lowest-scoring section (canonical order tie-break). */
   defaultSelectedSectionId: SectionId;
 }
 
+/**
+ * Builds the display-ready view model. `locale` controls the language of all
+ * derived text (section names, interpretation labels, collective
+ * interpretations, suggested actions, answer labels, and count labels).
+ * English is the default so existing callers are unchanged.
+ */
 export function buildDashboardView(
   data: ThresholdReachedDashboard,
+  locale: Locale = DEFAULT_LOCALE,
 ): DashboardView {
   const sections: SectionView[] = data.sections.map((section) => {
     const meta = getSectionMeta(section.id);
@@ -84,9 +106,10 @@ export function buildDashboardView(
         );
         return {
           key: category.key,
-          label: category.label,
+          label: getAnswerLabel(locale, category.key as AnswerOptionId),
           colorVar: category.colorVar,
           count,
+          countLabel: getStudentsLabel(count, locale),
           percentage: categoryPct,
           percentageDisplay: categoryPct.toFixed(1),
         };
@@ -95,18 +118,23 @@ export function buildDashboardView(
 
     return {
       id: section.id,
-      name: meta.name,
+      name: getSectionName(locale, section.id),
       colorVar: meta.colorVar,
       iconKey: meta.iconKey,
       validResponses: section.validResponses,
+      validResponsesLabel: getStudentsLabel(section.validResponses, locale),
       rawAverage: avg,
       percentage: pct,
       labelId,
       rawAverageDisplay: formatRawAverage(avg),
       percentageDisplay: roundPercentage(pct),
-      interpretationLabelText: interpretationText(pct),
-      collectiveInterpretation: sectionInterpretationText(section.id, labelId),
-      actions: sectionActions(section.id),
+      interpretationLabelText: getInterpretationLabelText(locale, labelId),
+      collectiveInterpretation: getSectionInterpretation(
+        locale,
+        section.id,
+        labelId,
+      ),
+      actions: getSectionActions(locale, section.id),
       categories,
     };
   });
@@ -123,7 +151,11 @@ export function buildDashboardView(
     overallScore: overall,
     overallScoreDisplay: roundPercentage(overall),
     overallLabelId: interpretationLabel(overall),
-    overallInterpretationText: interpretationText(overall),
+    overallInterpretationText: getInterpretationLabelText(
+      locale,
+      interpretationLabel(overall),
+    ),
+    responsibleReviewNote: getResponsibleReviewNote(locale),
     defaultSelectedSectionId,
   };
 }

@@ -3,39 +3,31 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getSiteUrl } from "@/lib/env";
+import { getMessages } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 
 export interface AuthState {
   error?: string;
   notice?: string;
 }
 
-/**
- * Generic, non-enumerating messages. We never reveal whether an email already
- * exists or already owns campaigns.
- */
-const GENERIC_SIGNIN_ERROR =
-  "We couldn't sign you in. Check your email and password and try again.";
-const GENERIC_SIGNUP_ERROR =
-  "We couldn't create your account right now. Please try again.";
-const CONFIRM_EMAIL_NOTICE =
-  "Check your email to confirm your account, then return to sign in.";
-
 export async function signInAction(
   _prev: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
+  const auth = getMessages(await getLocale()).auth;
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
   if (!email || !password) {
-    return { error: GENERIC_SIGNIN_ERROR };
+    return { error: auth.genericSignInError };
   }
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return { error: GENERIC_SIGNIN_ERROR };
+    return { error: auth.genericSignInError };
   }
 
   redirect("/teacher/dashboard");
@@ -45,14 +37,12 @@ export async function signUpAction(
   _prev: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
+  const auth = getMessages(await getLocale()).auth;
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
   if (!email || password.length < 6) {
-    return {
-      error:
-        "Enter a valid email and a password of at least 6 characters.",
-    };
+    return { error: auth.signupValidationError };
   }
 
   const supabase = await createClient();
@@ -63,7 +53,7 @@ export async function signUpAction(
   });
 
   if (error) {
-    return { error: GENERIC_SIGNUP_ERROR };
+    return { error: auth.genericSignUpError };
   }
 
   // Configuration 1: signup returns an active session -> straight to dashboard.
@@ -72,7 +62,7 @@ export async function signUpAction(
   }
 
   // Configuration 2: email confirmation required. Same code path either way.
-  return { notice: CONFIRM_EMAIL_NOTICE };
+  return { notice: auth.confirmEmailNotice };
 }
 
 export async function signOutAction(): Promise<void> {

@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
-import { studentCopy } from "@/lib/studentCopy";
+import { DEFAULT_LOCALE, getStudentCopy, type Locale } from "@/lib/i18n";
 import styles from "./WelcomeCard.module.css";
 
 interface WelcomeCardProps {
   onStart: () => void;
+  locale?: Locale;
 }
 
 /**
@@ -13,8 +14,8 @@ interface WelcomeCardProps {
  * used only here, never on question or completion screens. The illustration is
  * decorative (empty alt) and secondary to the text and Start button.
  */
-export function WelcomeCard({ onStart }: WelcomeCardProps) {
-  const { welcome } = studentCopy;
+export function WelcomeCard({ onStart, locale = DEFAULT_LOCALE }: WelcomeCardProps) {
+  const { welcome } = getStudentCopy(locale);
 
   return (
     <section className={styles.card} aria-labelledby="welcome-heading">
@@ -66,7 +67,7 @@ export function WelcomeCard({ onStart }: WelcomeCardProps) {
 
 /**
  * Decorative icons for the reassurance bullets, coloured from the project
- * palette. Order matches studentCopy.welcome.reassurances. Icons are
+ * palette. Order matches the localized welcome reassurances. Icons are
  * aria-hidden; the adjacent text carries the meaning, so colour is never the
  * sole indicator.
  */

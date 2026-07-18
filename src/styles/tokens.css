@@ -22,6 +22,16 @@
   --response-often: #009844; /* green */
   --response-always: #169eda; /* blue */
 
+  /* Section identity colours for the teacher dashboard. Drawn from the
+     SHU-inspired palette; distinct from the fixed response colours. Always
+     paired with icons and text labels — colour is never the only signal. */
+  --section-mood: var(--shu-yellow);
+  --section-safety: var(--shu-magenta);
+  --section-engagement: var(--shu-green);
+  --section-fomo: var(--shu-orange);
+  --section-social: var(--shu-blue);
+  --section-predictability: var(--shu-purple);
+
   /* Neutral backgrounds, borders, and text (§8.2) */
   --ui-navy: #081c2c;
   --ui-charcoal: #0d0d0d;
@@ -68,6 +78,7 @@
 
   /* Layout */
   --content-max-width: 960px;
+  --content-max-width-wide: 1200px;
   --shell-padding-inline: var(--space-4);
 
   /* Elevation */

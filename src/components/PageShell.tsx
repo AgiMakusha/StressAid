@@ -5,6 +5,12 @@ import styles from "./PageShell.module.css";
 
 interface PageShellProps {
   children: ReactNode;
+  /**
+   * Content width variant. "default" keeps the mobile-first student column;
+   * "wide" opts into the roomier teacher-dashboard column. This is an explicit,
+   * reusable prop rather than a route-specific CSS override.
+   */
+  variant?: "default" | "wide";
 }
 
 /**
@@ -14,11 +20,13 @@ interface PageShellProps {
  * attribution. Keeping SHU2026 in the footer (never inside content cards)
  * ensures it reads as event attribution, not as the owner of StressAid.
  */
-export function PageShell({ children }: PageShellProps) {
+export function PageShell({ children, variant = "default" }: PageShellProps) {
+  const mainClassName =
+    variant === "wide" ? `${styles.main} ${styles.mainWide}` : styles.main;
   return (
     <div className={styles.shell}>
       <BrandHeader />
-      <main className={styles.main}>{children}</main>
+      <main className={mainClassName}>{children}</main>
       <footer className={styles.footer}>
         <div className={styles.attribution}>
           <span className={styles.attributionLabel}>Created during</span>

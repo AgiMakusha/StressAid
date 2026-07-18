@@ -1,0 +1,185 @@
+.wheelWrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Scales with the container but stays fully visible/unclipped; the viewBox
+   aspect ratio keeps the donut circular and never forces horizontal scroll. */
+.wheel {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  overflow: visible;
+}
+
+.sector {
+  cursor: pointer;
+}
+
+/* Non-colour selected highlight: the whole sector nudges outward (via the
+   transform in the component) and is lifted with a soft elevation shadow.
+   Combined with the bolder, section-coloured label this reads clearly without
+   any frame and without relying on colour alone. */
+.sector[data-selected="true"] {
+  filter: drop-shadow(0 3px 5px rgba(8, 28, 44, 0.35));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sector[data-selected="true"] {
+    filter: drop-shadow(0 2px 3px rgba(8, 28, 44, 0.3));
+  }
+}
+
+.band {
+  stroke: var(--color-surface);
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+/* Transparent full-sector control. Fill must be a colour (not "none") so it
+   still receives pointer events across the whole 60° sector. */
+.hitArea {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 3;
+  transition: stroke 120ms ease;
+}
+
+/* Suppress the browser's default (orange) focus ring. Selection itself is shown
+   by the outward pop-out + elevation shadow + bolder coloured label, not a
+   frame. Keyboard focus keeps a dashed outline so it stays operable/visible. */
+.hitArea:focus {
+  outline: none;
+}
+
+/* Keyboard focus: a dashed navy outline around the whole sector. Navy
+   (--color-text) has ≥4.3:1 non-text contrast against all five response
+   colours (WCAG 1.4.11), so it stays clearly visible on every band. */
+.hitArea:focus-visible {
+  stroke: var(--color-text);
+  stroke-width: 4;
+  stroke-dasharray: 5 3;
+  outline: none;
+}
+
+.labelIcon {
+  pointer-events: none;
+}
+
+.labelText {
+  pointer-events: none;
+  fill: var(--color-text);
+}
+
+.labelName {
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+}
+
+/* Bolder label reinforces the selected state without relying on colour. */
+.labelText[data-selected="true"] .labelName {
+  font-weight: var(--font-weight-bold);
+}
+
+.labelPercent {
+  font-size: 13px;
+  font-weight: var(--font-weight-bold);
+}
+
+.centerDisc {
+  fill: var(--color-surface);
+  stroke: var(--color-border);
+  stroke-width: 1.5;
+}
+
+.centerScore {
+  fill: var(--color-text);
+  font-size: 26px;
+  font-weight: var(--font-weight-bold);
+}
+
+.centerLabelSmall {
+  fill: var(--color-text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.centerInterpretation {
+  fill: var(--color-text);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+}
+
+/* ---- Legend ---- */
+.legend {
+  width: 100%;
+  background-color: var(--ui-off-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.legendHeading {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.legendSub {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.legendList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.legendSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-sm);
+  flex: none;
+  border: 1px solid var(--color-border);
+}
+
+.legendHint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hitArea {
+    transition: none;
+  }
+}
+
+/* Slightly larger label text on narrow screens keeps names readable. */
+@media (max-width: 480px) {
+  .labelName {
+    font-size: 15px;
+  }
+
+  .labelPercent {
+    font-size: 14px;
+  }
+}

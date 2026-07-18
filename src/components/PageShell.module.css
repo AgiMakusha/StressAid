@@ -12,6 +12,12 @@
   padding: var(--space-6) var(--shell-padding-inline) var(--space-7);
 }
 
+/* Opt-in wider column for the teacher dashboard only. Student pages keep the
+   default width. */
+.mainWide {
+  max-width: var(--content-max-width-wide);
+}
+
 .footer {
   border-top: 1px solid var(--color-border);
   background-color: var(--color-surface);

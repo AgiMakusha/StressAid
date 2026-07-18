@@ -24,18 +24,18 @@ interface ClassEnvironmentWheelProps {
   locale?: Locale;
 }
 
-/* Layout constants. The viewBox leaves generous room so larger section labels
-   sit just outside the ring without clipping. The donut stays circular because
-   inner/outer radii are equal in both axes. OUTER_R is kept large relative to
-   HOLE_R so even a single response still paints a clearly visible band. */
-const VB_WIDTH = 640;
-const VB_HEIGHT = 520;
-const CX = 320;
-const CY = 255;
-const HOLE_R = 56; // Centre hole — overall result only; no response colour here.
-const OUTER_R = 152;
-const LABEL_R = OUTER_R + 48;
-const POP_OUT = 13; // Non-colour selected marker: sector nudges outward.
+/* Layout constants. The viewBox leaves room for section labels outside the
+   ring without clipping. OUTER_R is kept large relative to HOLE_R so even a
+   single response still paints a clearly visible band — and large relative to
+   the viewBox so the donut fills most of the rendered SVG. */
+const VB_WIDTH = 720;
+const VB_HEIGHT = 640;
+const CX = 360;
+const CY = 318;
+const HOLE_R = 84; // Centre hole — overall result only; no response colour here.
+const OUTER_R = 230;
+const LABEL_R = OUTER_R + 52;
+const POP_OUT = 16; // Non-colour selected marker: sector nudges outward.
 
 export function ClassEnvironmentWheel({
   sections,
@@ -174,7 +174,7 @@ export function ClassEnvironmentWheel({
         />
         <text
           x={CX}
-          y={CY - 6}
+          y={CY - 10}
           textAnchor="middle"
           className={styles.centerScore}
           style={{ fill: situationColor }}
@@ -183,7 +183,7 @@ export function ClassEnvironmentWheel({
         </text>
         <text
           x={CX}
-          y={CY + 8}
+          y={CY + 12}
           textAnchor="middle"
           className={styles.centerLabelSmall}
         >
@@ -191,7 +191,7 @@ export function ClassEnvironmentWheel({
         </text>
         <text
           x={CX}
-          y={CY + 22}
+          y={CY + 32}
           textAnchor="middle"
           className={styles.centerInterpretation}
           style={{ fill: situationColor }}

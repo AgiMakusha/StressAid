@@ -2,6 +2,7 @@
 
 import type { SectionView } from "@/lib/teacher/viewModel";
 import type { SectionId } from "@/lib/questionnaire";
+import { INTERPRETATION_COLOR } from "@/lib/teacher/scoring";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 import { SectionIcon } from "./SectionIcon";
 import { DistributionBar } from "./ResponseDistribution";
@@ -53,7 +54,10 @@ export function SectionOverviewList({
                     {section.percentageDisplay}%
                   </span>
                 </span>
-                <span className={styles.interpretation}>
+                <span
+                  className={styles.interpretation}
+                  style={{ color: INTERPRETATION_COLOR[section.labelId] }}
+                >
                   {section.interpretationLabelText}
                 </span>
                 <DistributionBar

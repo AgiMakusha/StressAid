@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import type { SectionId } from "@/lib/questionnaire";
 import {
   areResultsAvailable,
@@ -42,17 +43,19 @@ export function TeacherDashboard({ data, locale }: TeacherDashboardProps) {
   );
 
   return (
-    <div className={styles.dashboard}>
-      <DashboardHeader data={data} locale={activeLocale} />
-      {available && data.resultsAvailable ? (
-        <DashboardResults data={data} locale={activeLocale} />
-      ) : (
-        <ThresholdNotice
-          responseCount={data.campaign.responseCount}
-          threshold={data.campaign.minimumResponseThreshold}
-          locale={activeLocale}
-        />
-      )}
+    <div className={styles.shell}>
+      <div className={styles.dashboard}>
+        <DashboardHeader data={data} locale={activeLocale} />
+        {available && data.resultsAvailable ? (
+          <DashboardResults data={data} locale={activeLocale} />
+        ) : (
+          <ThresholdNotice
+            responseCount={data.campaign.responseCount}
+            threshold={data.campaign.minimumResponseThreshold}
+            locale={activeLocale}
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -69,15 +72,27 @@ function DashboardHeader({
   return (
     <header className={styles.header}>
       <div className={styles.headerTop}>
-        <div>
+        <div className={styles.titleBlock}>
           {data.isDemo ? (
             <p className={styles.demoBadge}>
               <span className={styles.demoDot} aria-hidden="true" />
               {t.demoBadge}
             </p>
           ) : null}
-          <h1 className={styles.className}>{klass.displayName}</h1>
-          <p className={styles.campaignTitle}>{campaign.title}</p>
+          <div className={styles.classRow}>
+            <Image
+              src="/brand/Student/Icon 9.svg"
+              alt=""
+              width={120}
+              height={120}
+              className={styles.classIcon}
+              unoptimized
+            />
+            <div>
+              <h1 className={styles.className}>{klass.displayName}</h1>
+              <p className={styles.campaignTitle}>{campaign.title}</p>
+            </div>
+          </div>
         </div>
         <span
           className={styles.statusChip}
@@ -146,26 +161,27 @@ function DashboardResults({
         )}
       </div>
 
+      <div className={styles.wheelRow}>
+        <ClassEnvironmentWheel
+          sections={view.sections}
+          selectedSectionId={selectedSectionId}
+          onSelect={setSelectedSectionId}
+          overallScoreDisplay={view.overallScoreDisplay}
+          overallInterpretationText={view.overallInterpretationText}
+          overallLabelId={view.overallLabelId}
+          locale={locale}
+        />
+      </div>
+
       <div className={styles.resultsGrid}>
-        <div className={styles.wheelColumn}>
-          <ClassEnvironmentWheel
+        <div className={styles.overviewCard}>
+          <h2 className={styles.sectionHeading}>{t.sectionOverview}</h2>
+          <SectionOverviewList
             sections={view.sections}
             selectedSectionId={selectedSectionId}
             onSelect={setSelectedSectionId}
-            overallScoreDisplay={view.overallScoreDisplay}
-            overallInterpretationText={view.overallInterpretationText}
-            overallLabelId={view.overallLabelId}
             locale={locale}
           />
-          <div className={styles.overviewCard}>
-            <h2 className={styles.sectionHeading}>{t.sectionOverview}</h2>
-            <SectionOverviewList
-              sections={view.sections}
-              selectedSectionId={selectedSectionId}
-              onSelect={setSelectedSectionId}
-              locale={locale}
-            />
-          </div>
         </div>
 
         <div className={styles.detailColumn}>

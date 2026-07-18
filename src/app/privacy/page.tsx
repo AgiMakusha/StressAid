@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 import { getMessages } from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
+import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -18,8 +19,10 @@ export default async function PrivacyPage() {
       <p>{m.p1}</p>
       <p>{m.p2}</p>
       <p>{m.p3}</p>
-      <p>
-        <Link href="/">{m.backToHome}</Link>
+      <p className={styles.backRow}>
+        <Link href="/" className={styles.backButton}>
+          {m.backToHome}
+        </Link>
       </p>
     </PageShell>
   );

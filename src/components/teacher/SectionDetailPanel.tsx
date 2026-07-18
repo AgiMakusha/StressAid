@@ -1,4 +1,5 @@
 import type { SectionView } from "@/lib/teacher/viewModel";
+import { INTERPRETATION_COLOR } from "@/lib/teacher/scoring";
 import { DEFAULT_LOCALE, getMessages, type Locale } from "@/lib/i18n";
 import { SectionIcon } from "./SectionIcon";
 import { DistributionTable } from "./ResponseDistribution";
@@ -24,8 +25,13 @@ export function SectionDetailPanel({
   locale?: Locale;
 }) {
   const t = getMessages(locale).teacherDashboard;
+  const interpretationColor = INTERPRETATION_COLOR[section.labelId];
   return (
-    <section className={styles.panel} aria-labelledby="section-detail-heading">
+    <section
+      className={styles.panel}
+      style={{ borderLeftColor: interpretationColor }}
+      aria-labelledby="section-detail-heading"
+    >
       <header className={styles.header}>
         <span
           className={styles.iconBadge}
@@ -37,7 +43,12 @@ export function SectionDetailPanel({
           <h3 id="section-detail-heading" className={styles.title}>
             {section.name}
           </h3>
-          <p className={styles.labelPill}>{section.interpretationLabelText}</p>
+          <p
+            className={styles.labelPill}
+            style={{ color: interpretationColor }}
+          >
+            {section.interpretationLabelText}
+          </p>
         </div>
       </header>
 
@@ -62,7 +73,10 @@ export function SectionDetailPanel({
 
       <div className={styles.block}>
         <h4 className={styles.blockTitle}>{t.collectiveInterpretation}</h4>
-        <p className={styles.interpretation}>
+        <p
+          className={styles.interpretation}
+          style={{ color: interpretationColor }}
+        >
           {section.collectiveInterpretation}
         </p>
         <p className={styles.reviewNote}>{reviewNote}</p>

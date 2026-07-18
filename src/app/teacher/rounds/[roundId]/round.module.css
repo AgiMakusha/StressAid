@@ -1,49 +1,69 @@
 .context {
-  display: grid;
-  gap: var(--space-2);
   margin-bottom: var(--space-4);
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--shu-green) 8%, var(--ui-white)) 0%,
+      var(--ui-white) 55%,
+      var(--ui-white) 100%
+    );
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .contextTop {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--space-3);
   align-items: center;
   justify-content: space-between;
 }
 
 .roundName {
-  font-size: var(--font-size-lg);
   margin: 0;
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-tight);
+  color: var(--color-text);
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  align-items: center;
 }
 
 .btn {
   min-height: 44px;
-  padding: 0.6rem 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
+  padding: var(--space-3) var(--space-5);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: transparent;
   color: var(--color-text);
   font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.btn:hover {
+  border-color: var(--shu-green);
+  color: var(--shu-green);
 }
 
 .btnPrimary {
   min-height: 44px;
   min-width: 44px;
-  padding: 0.6rem 1.25rem;
+  padding: var(--space-3) var(--space-5);
   border: 0;
   border-radius: var(--radius-pill);
-  background-color: var(--shu-blue);
+  background-color: var(--shu-green);
   color: var(--ui-white);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
@@ -52,18 +72,42 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 120ms ease;
 }
 
 .btnPrimary:hover {
-  background-color: color-mix(in srgb, var(--shu-blue) 88%, black);
+  background-color: color-mix(in srgb, var(--shu-green) 88%, black);
 }
 
 .backRow {
   margin-top: var(--space-6);
+  display: flex;
+  justify-content: center;
 }
 
 .notFound {
   display: grid;
   gap: var(--space-3);
   max-width: 40rem;
+  margin: 0 auto;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 520px) {
+  .context {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .btn,
+  .btnPrimary {
+    width: 100%;
+  }
 }

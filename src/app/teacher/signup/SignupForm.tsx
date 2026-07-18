@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { getMessages, useLocale } from "@/lib/i18n";
 import { signUpAction, type AuthState } from "../auth-actions";
@@ -17,63 +18,76 @@ export function SignupForm() {
   );
 
   return (
-    <section className={styles.card} aria-labelledby="signup-heading">
-      <div>
-        <h1 id="signup-heading" className={styles.title}>
-          {m.signupTitle}
-        </h1>
-        <p className={styles.lede}>{m.signupLede}</p>
-      </div>
-
-      <form className={styles.form} action={formAction}>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="email">
-            {m.emailLabel}
-          </label>
-          <input
-            className={styles.input}
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
+    <div className={styles.panel}>
+      <section className={styles.card} aria-labelledby="signup-heading">
+        <div className={styles.cardHeader}>
+          <Image
+            src="/brand/Teacher/Predictability.svg"
+            alt=""
+            width={120}
+            height={120}
+            className={styles.cardIcon}
+            unoptimized
           />
         </div>
 
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="password">
-            {m.passwordLabel}
-          </label>
-          <input
-            className={styles.input}
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="new-password"
-            minLength={6}
-            required
-          />
+        <div>
+          <h1 id="signup-heading" className={styles.title}>
+            {m.signupTitle}
+          </h1>
+          <p className={styles.lede}>{m.signupLede}</p>
         </div>
 
-        {state.error ? (
-          <p className={styles.error} role="alert">
-            {state.error}
-          </p>
-        ) : null}
-        {state.notice ? (
-          <p className={styles.notice} role="status">
-            {state.notice}
-          </p>
-        ) : null}
+        <form className={styles.form} action={formAction}>
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="email">
+              {m.emailLabel}
+            </label>
+            <input
+              className={styles.input}
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+            />
+          </div>
 
-        <button className={styles.submit} type="submit" disabled={isPending}>
-          {isPending ? m.creatingAccount : m.createAccountButton}
-        </button>
-      </form>
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="password">
+              {m.passwordLabel}
+            </label>
+            <input
+              className={styles.input}
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              minLength={6}
+              required
+            />
+          </div>
 
-      <p className={styles.altLink}>
-        {m.haveAccountPrompt} <Link href="/teacher/login">{m.signInLink}</Link>
-      </p>
-    </section>
+          {state.error ? (
+            <p className={styles.error} role="alert">
+              {state.error}
+            </p>
+          ) : null}
+          {state.notice ? (
+            <p className={styles.notice} role="status">
+              {state.notice}
+            </p>
+          ) : null}
+
+          <button className={styles.submit} type="submit" disabled={isPending}>
+            {isPending ? m.creatingAccount : m.createAccountButton}
+          </button>
+        </form>
+
+        <p className={styles.altLink}>
+          {m.haveAccountPrompt} <Link href="/teacher/login">{m.signInLink}</Link>
+        </p>
+      </section>
+    </div>
   );
 }

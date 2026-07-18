@@ -34,11 +34,29 @@
   background-color: var(--color-surface);
 }
 
+.betaBadge {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-4) var(--shell-padding-inline) 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-style: italic;
+  color: var(--shu-blue);
+}
+
+.productBlurb {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-2) var(--shell-padding-inline) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
 /* Secondary SHU2026 event attribution: small, kept subordinate to StressAid. */
 .attribution {
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: var(--space-4) var(--shell-padding-inline) 0;
+  padding: 2px var(--shell-padding-inline) 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -57,16 +75,6 @@
   height: 22px;
 }
 
-.betaBadge {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  padding: var(--space-2) var(--shell-padding-inline) 0;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  font-style: italic;
-  color: var(--shu-blue);
-}
-
 .footerText {
   max-width: var(--content-max-width);
   margin: 0 auto;
@@ -82,6 +90,7 @@
     text-align: center;
   }
 
+  .productBlurb,
   .betaBadge,
   .footerText {
     text-align: center;

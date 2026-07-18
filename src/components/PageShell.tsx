@@ -55,6 +55,8 @@ export async function PageShell({
         ) : null}
         <main className={mainClassName}>{children}</main>
         <footer className={styles.footer}>
+          <p className={styles.betaBadge}>{m.footer.betaBadge}</p>
+          <p className={styles.productBlurb}>{m.footer.productBlurb}</p>
           <div className={styles.attribution}>
             <span className={styles.attributionLabel}>
               {m.footer.createdDuring}
@@ -68,7 +70,6 @@ export async function PageShell({
               unoptimized
             />
           </div>
-          <p className={styles.betaBadge}>{m.footer.betaBadge}</p>
           <p className={styles.footerText}>{m.footer.text}</p>
         </footer>
       </div>

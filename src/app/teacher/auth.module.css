@@ -1,19 +1,64 @@
-.card {
-  max-width: 30rem;
+.panel {
   margin: 0 auto;
+  max-width: 32rem;
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--shu-magenta) 8%, var(--ui-white)) 0%,
+      var(--ui-white) 42%,
+      var(--ui-white) 100%
+    );
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.card {
+  position: relative;
   display: grid;
   gap: var(--space-4);
+  align-content: start;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: var(--shu-magenta);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.cardIcon {
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .title {
-  font-size: var(--font-size-2xl);
-  color: var(--shu-magenta);
   margin: 0;
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-tight);
+  color: var(--color-text);
 }
 
 .lede {
-  color: var(--color-text-muted);
   margin: 0;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-base);
 }
 
 .form {
@@ -47,14 +92,19 @@
 
 .submit {
   min-height: 44px;
-  padding: 0.75rem 1.25rem;
+  padding: var(--space-3) var(--space-5);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   background: var(--shu-magenta);
-  color: #fff;
+  color: var(--ui-white);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.submit:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--shu-magenta) 88%, black);
 }
 
 .submit:disabled {
@@ -75,5 +125,27 @@
 }
 
 .altLink {
+  margin: 0;
   color: var(--color-text-muted);
+}
+
+.altLink a {
+  color: var(--shu-blue);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.altLink a:hover {
+  color: color-mix(in srgb, var(--shu-blue) 80%, black);
+}
+
+@media (max-width: 520px) {
+  .panel {
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .card {
+    padding: var(--space-4);
+  }
 }

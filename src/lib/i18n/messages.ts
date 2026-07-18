@@ -16,6 +16,7 @@ export interface Messages {
     frameworkAttribution: string;
   };
   footer: {
+    productBlurb: string;
     createdDuring: string;
     betaBadge: string;
     text: string;
@@ -24,10 +25,12 @@ export interface Messages {
     kicker: string;
     lede: string;
     getStarted: string;
+    studentsLabel: string;
     answerTitle: string;
     answerBodyBefore: string;
     answerBodyAfter: string;
     tryDemo: string;
+    teachersLabel: string;
     teachersTitle: string;
     teachersBody: string;
     teacherSignIn: string;
@@ -177,19 +180,23 @@ const en: Messages = {
       "Based on the Center for Neuro-Innovation and Performance framework",
   },
   footer: {
+    productBlurb:
+      "StressAid is a privacy-first school environment feedback tool.",
     createdDuring: "Created and grounded in team 5 personal experience during",
     betaBadge: "Hackathon beta · ready to use",
-    text: "Organised by EGInA in Cascia, Italy. StressAid is a privacy-first school environment feedback tool.",
+    text: "Organised by EGInA in Cascia, Italy.",
   },
   landing: {
-    kicker: "Social Hackathon Umbria 2026 — MVP",
+    kicker: "Social Hackathon Umbria 2026 — ready to use MVP",
     lede: "StressAid is a privacy-first school environment feedback tool. Students answer a short, anonymous questionnaire. Answers are combined at class level and shown to teachers as collective signals — never as individual results.",
     getStarted: "Get started",
+    studentsLabel: "Students",
     answerTitle: "Answer a questionnaire",
     answerBodyBefore: "Open the questionnaire link provided by your teacher. It looks like ",
     answerBodyAfter: ".",
     tryDemo: "Try the demo questionnaire",
-    teachersTitle: "Teachers",
+    teachersLabel: "Teachers",
+    teachersTitle: "Teacher tools",
     teachersBody: "Sign in to create campaigns, start rounds, and view collective results.",
     teacherSignIn: "Teacher sign in",
     createTestAccount: "Create a teacher test account",
@@ -359,20 +366,24 @@ const it: Messages = {
       "Basato sul framework del Center for Neuro-Innovation and Performance",
   },
   footer: {
+    productBlurb:
+      "StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy.",
     createdDuring:
       "Creato e fondato sull’esperienza personale del team 5 durante",
     betaBadge: "Beta hackathon · pronto all’uso",
-    text: "Organizzato da EGInA a Cascia, Italia. StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy.",
+    text: "Organizzato da EGInA a Cascia, Italia.",
   },
   landing: {
-    kicker: "Social Hackathon Umbria 2026 — MVP",
+    kicker: "Social Hackathon Umbria 2026 — MVP pronto all’uso",
     lede: "StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy. Gli studenti rispondono a un breve questionario anonimo. Le risposte vengono unite a livello di classe e mostrate agli insegnanti come segnali collettivi, mai come risultati individuali.",
     getStarted: "Inizia",
+    studentsLabel: "Studenti",
     answerTitle: "Rispondi a un questionario",
     answerBodyBefore: "Apri il link al questionario fornito dal tuo insegnante. Ha un formato simile a ",
     answerBodyAfter: ".",
     tryDemo: "Prova il questionario dimostrativo",
-    teachersTitle: "Insegnanti",
+    teachersLabel: "Insegnanti",
+    teachersTitle: "Strumenti per insegnanti",
     teachersBody: "Accedi per creare campagne, avviare rilevazioni e vedere i risultati collettivi.",
     teacherSignIn: "Accesso insegnanti",
     createTestAccount: "Crea un account insegnante di prova",

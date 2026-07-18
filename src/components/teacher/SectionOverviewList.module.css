@@ -31,10 +31,10 @@
   outline-offset: 2px;
 }
 
-/* Non-colour selected marker: bold border + left accent bar + shadow. */
+/* Non-colour selected marker: bold border + shadow (no left accent bar). */
 .row[data-selected="true"] {
   border-color: var(--color-text);
-  border-left-width: 4px;
+  border-width: 2px;
   box-shadow: var(--shadow-sm);
 }
 
@@ -74,5 +74,5 @@
 
 .interpretation {
   font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
+  font-weight: var(--font-weight-bold);
 }

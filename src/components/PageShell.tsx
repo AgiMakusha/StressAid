@@ -71,6 +71,15 @@ export async function PageShell({
             />
           </div>
           <p className={styles.footerText}>{m.footer.text}</p>
+          <p className={styles.license}>
+            <a
+              href="https://creativecommons.org/licenses/by-nc/4.0/"
+              target="_blank"
+              rel="noopener noreferrer license"
+            >
+              {m.footer.license}
+            </a>
+          </p>
         </footer>
       </div>
     </LocaleProvider>

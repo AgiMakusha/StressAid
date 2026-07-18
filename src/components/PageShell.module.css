@@ -78,9 +78,29 @@
 .footerText {
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: var(--space-2) var(--shell-padding-inline) var(--space-4);
+  padding: var(--space-2) var(--shell-padding-inline) 0;
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+}
+
+.license {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-1) var(--shell-padding-inline) var(--space-4);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.license a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.license a:hover,
+.license a:focus-visible {
+  color: var(--color-text);
 }
 
 /* Centre the attribution on mobile. */
@@ -92,7 +112,8 @@
 
   .productBlurb,
   .betaBadge,
-  .footerText {
+  .footerText,
+  .license {
     text-align: center;
   }
 }

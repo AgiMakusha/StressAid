@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   description:
     "StressAid is a privacy-first school environment feedback tool. Students answer a short anonymous questionnaire and results are shown to teachers at class level only.",
   applicationName: "StressAid",
+  icons: {
+    icon: [{ url: "/brand/Bird.png", type: "image/png" }],
+    apple: [{ url: "/brand/Bird.png", type: "image/png" }],
+  },
 };
 
 export const viewport: Viewport = {

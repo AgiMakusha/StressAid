@@ -24,12 +24,15 @@ export default async function HomePage() {
             unoptimized
           />
         </h1>
-        <p className={styles.lede}>
-          {m.lede}{" "}
-          <Link href="/privacy" className={styles.ledePrivacyLink}>
-            {m.privacyLink}
-          </Link>
-        </p>
+        <div className={styles.ledeBlock}>
+          <p className={styles.tagline}>{m.tagline}</p>
+          <p className={styles.lede}>
+            {m.lede}{" "}
+            <Link href="/privacy" className={styles.ledePrivacyLink}>
+              {m.privacyLink}
+            </Link>
+          </p>
+        </div>
       </section>
 
       <section aria-labelledby="actions-heading" className={styles.linksSection}>

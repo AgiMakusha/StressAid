@@ -20,9 +20,11 @@ export interface Messages {
     createdDuring: string;
     betaBadge: string;
     text: string;
+    license: string;
   };
   landing: {
     kicker: string;
+    tagline: string;
     lede: string;
     getStarted: string;
     studentsLabel: string;
@@ -185,9 +187,11 @@ const en: Messages = {
     createdDuring: "Created and grounded in team 5 personal experience during",
     betaBadge: "Hackathon beta · ready to use",
     text: "Organised by EGInA in Cascia, Italy.",
+    license: "Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)",
   },
   landing: {
     kicker: "Social Hackathon Umbria 2026 — ready to use MVP",
+    tagline: "“From every voice to collective peace”",
     lede: "StressAid is a privacy-first school environment feedback tool. Students answer a short, anonymous questionnaire. Answers are combined at class level and shown to teachers as collective signals — never as individual results.",
     getStarted: "Get started",
     studentsLabel: "Students",
@@ -372,10 +376,12 @@ const it: Messages = {
       "Creato e fondato sull’esperienza personale del team 5 durante",
     betaBadge: "Beta hackathon · pronto all’uso",
     text: "Organizzato da EGInA a Cascia, Italia.",
+    license: "Attribuzione — Non commerciale 4.0 Internazionale (CC BY-NC 4.0)",
   },
   landing: {
     kicker: "Social Hackathon Umbria 2026 — MVP pronto all’uso",
-    lede: "StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy. Gli studenti rispondono a un breve questionario anonimo. Le risposte vengono unite a livello di classe e mostrate agli insegnanti come segnali collettivi, mai come risultati individuali.",
+    tagline: "“Da ogni voce alla pace collettiva”",
+    lede: "StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy. Gli studenti rispondono a un breve questionario anonimo. Le risposte della classe vengono unite e mostrate agli insegnanti come segnali collettivi, mai come risultati individuali.",
     getStarted: "Inizia",
     studentsLabel: "Studenti",
     answerTitle: "Rispondi a un questionario",

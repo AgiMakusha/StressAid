@@ -12,7 +12,7 @@
 }
 
 .title {
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--space-5);
   line-height: 0;
   display: flex;
   justify-content: center;
@@ -24,10 +24,26 @@
   height: auto;
 }
 
-.lede {
-  font-size: var(--font-size-lg);
+/* Tagline sits in the same column as the lede, immediately above it. */
+.ledeBlock {
   max-width: 60ch;
   margin-inline: auto;
+}
+
+.tagline {
+  margin: 0 0 var(--space-2);
+  text-align: right;
+  white-space: nowrap;
+  font-size: clamp(0.85rem, 1.9vw, 1rem);
+  font-style: italic;
+  font-weight: var(--font-weight-normal);
+  line-height: 1.35;
+  color: var(--shu-green);
+}
+
+.lede {
+  margin: 0;
+  font-size: var(--font-size-lg);
   text-align: center;
 }
 
@@ -216,6 +232,11 @@
 }
 
 @media (max-width: 520px) {
+  .tagline {
+    white-space: normal;
+    text-align: center;
+  }
+
   .linksSection {
     padding: var(--space-5) var(--space-3);
   }

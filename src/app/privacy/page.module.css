@@ -1,3 +1,27 @@
+.page {
+  position: relative;
+  isolation: isolate;
+  min-height: 22rem;
+}
+
+.backgroundArt {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: min(100%, 34rem);
+  height: auto;
+  margin: auto;
+  object-fit: contain;
+  opacity: 0.22;
+  pointer-events: none;
+  user-select: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
 .backRow {
   margin-top: var(--space-5);
 }

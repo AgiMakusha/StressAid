@@ -2,6 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./BrandHeader.module.css";
 
+interface BrandHeaderProps {
+  frameworkAttribution: string;
+}
+
 /**
  * Product header showing the StressAid identity only. StressAid is the primary
  * brand; SHU2026 event attribution lives in the footer (see PageShell), so the
@@ -10,7 +14,7 @@ import styles from "./BrandHeader.module.css";
  * The logo is rendered at its original aspect ratio and must never be redrawn,
  * recoloured, distorted, cropped, or merged (see stressaid-mvp guardrails).
  */
-export function BrandHeader() {
+export function BrandHeader({ frameworkAttribution }: BrandHeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
@@ -29,6 +33,7 @@ export function BrandHeader() {
             unoptimized
           />
         </Link>
+        <p className={styles.frameworkAttribution}>{frameworkAttribution}</p>
       </div>
     </header>
   );

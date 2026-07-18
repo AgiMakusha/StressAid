@@ -47,7 +47,7 @@ export async function PageShell({
   return (
     <LocaleProvider locale={locale}>
       <div className={styles.shell}>
-        <BrandHeader />
+        <BrandHeader frameworkAttribution={m.header.frameworkAttribution} />
         {showLocaleSwitcher ? (
           <div className={styles.utilityBar}>
             <LanguageSwitcher />

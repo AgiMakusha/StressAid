@@ -8,11 +8,23 @@
   max-width: var(--content-max-width);
   margin: 0 auto;
   /* Minimal vertical padding so a larger logo does not make the header taller. */
-  padding: var(--space-1) var(--shell-padding-inline);
+  padding: var(--space-2) var(--shell-padding-inline);
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: var(--space-1);
   /* Centre the logo on small student screens. */
   justify-content: center;
+  text-align: center;
+}
+
+.frameworkAttribution {
+  margin: 0;
+  max-width: 28rem;
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--shu-blue);
 }
 
 .productLink {
@@ -31,9 +43,11 @@
   height: auto;
 }
 
-/* From tablet up, align the logo to the start of the content column. */
+/* From tablet up, align the logo and attribution to the start of the column. */
 @media (min-width: 720px) {
   .inner {
+    align-items: flex-start;
     justify-content: flex-start;
+    text-align: start;
   }
 }

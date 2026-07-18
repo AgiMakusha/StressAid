@@ -12,6 +12,9 @@ export interface Messages {
     en: string;
     it: string;
   };
+  header: {
+    frameworkAttribution: string;
+  };
   footer: {
     createdDuring: string;
     betaBadge: string;
@@ -169,8 +172,12 @@ const en: Messages = {
     en: "EN",
     it: "IT",
   },
+  header: {
+    frameworkAttribution:
+      "Based on the Center for Neuro-Innovation and Performance framework",
+  },
   footer: {
-    createdDuring: "Created during",
+    createdDuring: "Created and grounded in team personal experience during",
     betaBadge: "Hackathon beta · ready to use",
     text: "Organised by EGInA in Cascia, Italy. StressAid is a privacy-first school environment feedback tool.",
   },
@@ -347,8 +354,13 @@ const it: Messages = {
     en: "EN",
     it: "IT",
   },
+  header: {
+    frameworkAttribution:
+      "Basato sul framework del Center for Neuro-Innovation and Performance",
+  },
   footer: {
-    createdDuring: "Creato durante",
+    createdDuring:
+      "Creato e fondato sull’esperienza personale del team durante",
     betaBadge: "Beta hackathon · pronto all’uso",
     text: "Organizzato da EGInA a Cascia, Italia. StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy.",
   },

@@ -21,6 +21,7 @@ export interface Messages {
     betaBadge: string;
     text: string;
     license: string;
+    privacyLink: string;
   };
   landing: {
     kicker: string;
@@ -43,7 +44,12 @@ export interface Messages {
     title: string;
     p1: string;
     p2: string;
-    p3: string;
+    cookiesTitle: string;
+    cookiesIntro: string;
+    cookieAuth: string;
+    cookieLocale: string;
+    cookiesNoTracking: string;
+    cookiesEssentialOnly: string;
     backToHome: string;
   };
   auth: {
@@ -188,6 +194,7 @@ const en: Messages = {
     betaBadge: "Hackathon beta · ready to use",
     text: "Organised by EGInA in Cascia, Italy.",
     license: "Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)",
+    privacyLink: "Privacy & cookies",
   },
   landing: {
     kicker: "Social Hackathon Umbria 2026 — ready to use MVP",
@@ -207,10 +214,20 @@ const en: Messages = {
     privacyLink: "Privacy information",
   },
   privacy: {
-    title: "Privacy",
+    title: "Privacy & cookies",
     p1: "StressAid is designed to be privacy-first. It does not ask for a student’s name, email, student ID, date of birth, or any other identifying information.",
     p2: "Answers are combined at class level and shown to teachers only as collective signals. Individual responses are never shown.",
-    p3: "This is a placeholder page. The full child-friendly notice and adult privacy information will be added in a later step.",
+    cookiesTitle: "Cookies",
+    cookiesIntro:
+      "We use only essential first-party cookies needed for the service to work. We do not use advertising or analytics cookies, so no cookie consent banner is shown.",
+    cookieAuth:
+      "Teacher sign-in: session cookies from our authentication provider (Supabase) keep teachers signed in securely.",
+    cookieLocale:
+      "Interface language: a cookie named stressaid_locale remembers whether you chose English or Italian. It stores only “en” or “it” — never names, answers, or account details.",
+    cookiesNoTracking:
+      "The student questionnaire does not set cookies and does not use local browser storage for answers.",
+    cookiesEssentialOnly:
+      "If we add non-essential cookies (for example analytics) in the future, we will ask for consent before setting them and update this page.",
     backToHome: "Back to home",
   },
   auth: {
@@ -377,6 +394,7 @@ const it: Messages = {
     betaBadge: "Beta hackathon · pronto all’uso",
     text: "Organizzato da EGInA a Cascia, Italia.",
     license: "Attribuzione — Non commerciale 4.0 Internazionale (CC BY-NC 4.0)",
+    privacyLink: "Privacy e cookie",
   },
   landing: {
     kicker: "Social Hackathon Umbria 2026 — MVP pronto all’uso",
@@ -396,10 +414,20 @@ const it: Messages = {
     privacyLink: "Informazioni sulla privacy",
   },
   privacy: {
-    title: "Privacy",
+    title: "Privacy e cookie",
     p1: "StressAid è progettato per essere attento alla privacy. Non richiede il nome dello studente, l’email, il numero di matricola, la data di nascita o qualsiasi altra informazione identificativa.",
     p2: "Le risposte vengono unite a livello di classe e mostrate agli insegnanti solo come segnali collettivi. Le risposte individuali non vengono mai mostrate.",
-    p3: "Questa è una pagina segnaposto. L’informativa completa adatta ai bambini e le informazioni sulla privacy per gli adulti verranno aggiunte in un passaggio successivo.",
+    cookiesTitle: "Cookie",
+    cookiesIntro:
+      "Utilizziamo solo cookie di prima parte essenziali al funzionamento del servizio. Non usiamo cookie di pubblicità o di analisi, quindi non mostriamo un banner di consenso cookie.",
+    cookieAuth:
+      "Accesso insegnanti: i cookie di sessione del nostro fornitore di autenticazione (Supabase) mantengono gli insegnanti autenticati in modo sicuro.",
+    cookieLocale:
+      "Lingua dell’interfaccia: un cookie chiamato stressaid_locale ricorda se hai scelto inglese o italiano. Memorizza solo “en” o “it” — mai nomi, risposte o dati dell’account.",
+    cookiesNoTracking:
+      "Il questionario per gli studenti non imposta cookie e non usa la memorizzazione locale del browser per le risposte.",
+    cookiesEssentialOnly:
+      "Se in futuro aggiungeremo cookie non essenziali (ad esempio per analisi), chiederemo il consenso prima di impostarli e aggiorneremo questa pagina.",
     backToHome: "Torna alla pagina iniziale",
   },
   auth: {

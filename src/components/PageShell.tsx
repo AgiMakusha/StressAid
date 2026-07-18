@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { BrandHeader } from "./BrandHeader";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { getMessages, LocaleProvider, type Locale } from "@/lib/i18n";
@@ -71,6 +72,9 @@ export async function PageShell({
             />
           </div>
           <p className={styles.footerText}>{m.footer.text}</p>
+          <p className={styles.footerLinks}>
+            <Link href="/privacy">{m.footer.privacyLink}</Link>
+          </p>
           <p className={styles.license}>
             <a
               href="https://creativecommons.org/licenses/by-nc/4.0/"

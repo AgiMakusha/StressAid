@@ -7,7 +7,7 @@ import { getLocale } from "@/lib/i18n/server";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Privacy",
+  title: "Privacy & cookies",
 };
 
 export default async function PrivacyPage() {
@@ -30,7 +30,16 @@ export default async function PrivacyPage() {
           <h1>{m.title}</h1>
           <p>{m.p1}</p>
           <p>{m.p2}</p>
-          <p>{m.p3}</p>
+
+          <h2 className={styles.sectionTitle}>{m.cookiesTitle}</h2>
+          <p>{m.cookiesIntro}</p>
+          <ul className={styles.cookieList}>
+            <li>{m.cookieAuth}</li>
+            <li>{m.cookieLocale}</li>
+          </ul>
+          <p>{m.cookiesNoTracking}</p>
+          <p>{m.cookiesEssentialOnly}</p>
+
           <p className={styles.backRow}>
             <Link href="/" className={styles.backButton}>
               {m.backToHome}

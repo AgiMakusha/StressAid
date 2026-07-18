@@ -83,6 +83,24 @@
   color: var(--color-text-muted);
 }
 
+.footerLinks {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-2) var(--shell-padding-inline) 0;
+  font-size: var(--font-size-sm);
+}
+
+.footerLinks a {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.footerLinks a:hover,
+.footerLinks a:focus-visible {
+  color: var(--color-text);
+}
+
 .license {
   max-width: var(--content-max-width);
   margin: 0 auto;
@@ -113,6 +131,7 @@
   .productBlurb,
   .betaBadge,
   .footerText,
+  .footerLinks,
   .license {
     text-align: center;
   }

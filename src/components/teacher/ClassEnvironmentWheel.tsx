@@ -24,18 +24,20 @@ interface ClassEnvironmentWheelProps {
   locale?: Locale;
 }
 
-/* Layout constants. The viewBox leaves room for section labels outside the
-   ring without clipping. OUTER_R is kept large relative to HOLE_R so even a
-   single response still paints a clearly visible band — and large relative to
-   the viewBox so the donut fills most of the rendered SVG. */
-const VB_WIDTH = 720;
-const VB_HEIGHT = 640;
-const CX = 360;
-const CY = 318;
-const HOLE_R = 84; // Centre hole — overall result only; no response colour here.
-const OUTER_R = 230;
-const LABEL_R = OUTER_R + 52;
-const POP_OUT = 16; // Non-colour selected marker: sector nudges outward.
+/* Layout: donut fills most of the viewBox so the wheel suits the card width.
+   Labels sit just outside the ring. Label type size is CSS clamp() (viewport)
+   so text stays readable on small screens and does not blow up on large ones. */
+const OUTER_R = 320;
+const HOLE_R = 118; // Centre hole — overall result only; no response colour here.
+const LABEL_R = OUTER_R + 44;
+const POP_OUT = 18; // Non-colour selected marker: sector nudges outward.
+/* Extra pad beyond the label anchor so CSS-sized labels (e.g. "Social Aspects")
+   never clip the card frame — anchors sit at LABEL_R, glyphs extend outward. */
+const LABEL_PAD = 200;
+const VB_WIDTH = (LABEL_R + LABEL_PAD + POP_OUT) * 2;
+const VB_HEIGHT = (LABEL_R + LABEL_PAD + POP_OUT) * 2;
+const CX = VB_WIDTH / 2;
+const CY = VB_HEIGHT / 2;
 
 export function ClassEnvironmentWheel({
   sections,
@@ -47,7 +49,8 @@ export function ClassEnvironmentWheel({
   locale = DEFAULT_LOCALE,
 }: ClassEnvironmentWheelProps) {
   const t = getMessages(locale).teacherDashboard;
-  const situationColor = INTERPRETATION_COLOR[overallLabelId];
+  /* Darken band colour for AA contrast of centre text on the white disc. */
+  const situationColor = `color-mix(in srgb, ${INTERPRETATION_COLOR[overallLabelId]} 70%, black)`;
   return (
     <div className={styles.wheelWrap}>
       <svg
@@ -150,13 +153,21 @@ export function ClassEnvironmentWheel({
                 textAnchor={textAnchor}
                 className={styles.labelText}
                 data-selected={isSelected}
-                style={isSelected ? { fill: section.colorVar } : undefined}
+                style={
+                  isSelected
+                    ? {
+                        /* Darken section colour so label text meets WCAG 2.2 AA
+                           contrast on white (≥4.5:1); colour is never the only cue. */
+                        fill: `color-mix(in srgb, ${section.colorVar} 70%, black)`,
+                      }
+                    : undefined
+                }
                 aria-hidden="true"
               >
                 <tspan className={styles.labelName}>{section.name}</tspan>
                 <tspan
                   x={anchorPoint.x}
-                  dy="1.15em"
+                  dy="1.2em"
                   className={styles.labelPercent}
                 >
                   {section.percentageDisplay}%
@@ -169,12 +180,12 @@ export function ClassEnvironmentWheel({
         <circle
           cx={CX}
           cy={CY}
-          r={HOLE_R - 4}
+          r={HOLE_R - 6}
           className={styles.centerDisc}
         />
         <text
           x={CX}
-          y={CY - 10}
+          y={CY - 12}
           textAnchor="middle"
           className={styles.centerScore}
           style={{ fill: situationColor }}
@@ -183,7 +194,7 @@ export function ClassEnvironmentWheel({
         </text>
         <text
           x={CX}
-          y={CY + 12}
+          y={CY + 14}
           textAnchor="middle"
           className={styles.centerLabelSmall}
         >
@@ -191,7 +202,7 @@ export function ClassEnvironmentWheel({
         </text>
         <text
           x={CX}
-          y={CY + 32}
+          y={CY + 36}
           textAnchor="middle"
           className={styles.centerInterpretation}
           style={{ fill: situationColor }}

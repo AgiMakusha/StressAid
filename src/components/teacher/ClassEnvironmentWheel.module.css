@@ -4,16 +4,18 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
+  /* Keep labels clear of the surrounding card/shell frame. */
+  padding-inline: var(--space-3);
+  box-sizing: border-box;
 }
 
-/* Scales with the container but stays fully visible/unclipped; the viewBox
-   aspect ratio keeps the donut circular and never forces horizontal scroll.
-   Caps grow with viewport so the wheel reads larger on tablet/desktop. */
+/* Fill the card width — geometry (not a max-width cap) controls visual size. */
 .wheel {
-  width: min(100%, 1040px);
+  width: 100%;
   max-width: 100%;
   height: auto;
   overflow: visible;
+  display: block;
 }
 
 .sector {
@@ -49,16 +51,11 @@
   transition: stroke 120ms ease;
 }
 
-/* Suppress the browser's default (orange) focus ring. Selection itself is shown
-   by the outward pop-out + elevation shadow + bolder coloured label, not a
-   frame. Keyboard focus keeps a dashed outline so it stays operable/visible. */
 .hitArea:focus {
   outline: none;
 }
 
-/* Keyboard focus: a dashed navy outline around the whole sector. Navy
-   (--color-text) has ≥4.3:1 non-text contrast against all five response
-   colours (WCAG 1.4.11), so it stays clearly visible on every band. */
+/* Keyboard focus: dashed navy outline (WCAG 1.4.11 non-text contrast). */
 .hitArea:focus-visible {
   stroke: var(--color-text);
   stroke-width: 4;
@@ -66,23 +63,24 @@
   outline: none;
 }
 
+/* Viewport-scaled type (not SVG user units) so large screens stay restrained
+   while phones keep an AA-readable floor. Navy on white ≈ 16:1 (WCAG 2.2 AA). */
 .labelText {
   pointer-events: none;
   fill: var(--color-text);
 }
 
 .labelName {
-  font-size: clamp(15px, 2.4vw, 26px);
-  font-weight: var(--font-weight-medium);
-}
-
-/* Bolder label reinforces the selected state without relying on colour. */
-.labelText[data-selected="true"] .labelName {
+  font-size: clamp(16px, 2.1vw, 26px);
   font-weight: var(--font-weight-bold);
 }
 
+.labelText[data-selected="true"] .labelName {
+  font-weight: 800;
+}
+
 .labelPercent {
-  font-size: clamp(14px, 2.2vw, 24px);
+  font-size: clamp(16px, 2vw, 24px);
   font-weight: var(--font-weight-bold);
 }
 
@@ -94,21 +92,41 @@
 
 .centerScore {
   fill: var(--color-text);
-  font-size: clamp(22px, 4vw, 40px);
+  font-size: clamp(22px, 3vw, 36px);
   font-weight: var(--font-weight-bold);
 }
 
 .centerLabelSmall {
+  /* Muted navy on white ≈ 6.5:1 — AA for normal text. */
   fill: var(--color-text-muted);
-  font-size: clamp(10px, 1.5vw, 14px);
+  font-size: clamp(11px, 1.3vw, 14px);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
 .centerInterpretation {
   fill: var(--color-text);
-  font-size: clamp(12px, 1.8vw, 18px);
-  font-weight: var(--font-weight-medium);
+  font-size: clamp(13px, 1.7vw, 18px);
+  font-weight: var(--font-weight-bold);
+}
+
+@media (max-width: 480px) {
+  .labelName {
+    font-size: 15px;
+  }
+
+  .labelPercent {
+    font-size: 15px;
+  }
+
+  .centerScore {
+    font-size: 20px;
+  }
+
+  .centerInterpretation {
+    font-size: 12px;
+  }
 }
 
 /* ---- Legend ---- */
@@ -153,7 +171,7 @@
 .legendSwatch {
   width: 14px;
   height: 14px;
-  border-radius: var(--radius-sm);
+  border-radius: 50%;
   flex: none;
   border: 1px solid var(--color-border);
 }
@@ -167,28 +185,5 @@
 @media (prefers-reduced-motion: reduce) {
   .hitArea {
     transition: none;
-  }
-}
-
-/* Extra tightening on very narrow phones so labels stay inside the SVG. */
-@media (max-width: 420px) {
-  .labelName {
-    font-size: 14px;
-  }
-
-  .labelPercent {
-    font-size: 13px;
-  }
-
-  .centerScore {
-    font-size: 20px;
-  }
-
-  .centerLabelSmall {
-    font-size: 9px;
-  }
-
-  .centerInterpretation {
-    font-size: 11px;
   }
 }

@@ -155,11 +155,11 @@
 }
 
 /* ---- Results layout ---- */
-/* Wheel on its own full-width row so it can grow; overview + detail below. */
+/* Wheel on its own full-width row so it fills the card. */
 .wheelRow {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  min-width: 0;
+  overflow: visible;
 }
 
 .resultsGrid {

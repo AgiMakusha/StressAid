@@ -15,15 +15,16 @@
   padding: var(--space-3);
   min-height: 44px;
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   text-align: left;
   cursor: pointer;
-  transition: border-color 120ms ease, box-shadow 120ms ease;
+  transition: box-shadow 120ms ease, border-width 120ms ease,
+    background-color 120ms ease;
 }
 
 .row:hover {
-  border-color: var(--color-text-muted);
+  box-shadow: var(--shadow-sm);
 }
 
 .row:focus-visible {
@@ -31,10 +32,9 @@
   outline-offset: 2px;
 }
 
-/* Non-colour selected marker: bold border + shadow (no left accent bar). */
+/* Selected: thicker section-coloured frame + soft tinted background (inline). */
 .row[data-selected="true"] {
-  border-color: var(--color-text);
-  border-width: 2px;
+  border-width: 3px;
   box-shadow: var(--shadow-sm);
 }
 

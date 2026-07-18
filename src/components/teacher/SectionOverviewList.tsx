@@ -39,6 +39,12 @@ export function SectionOverviewList({
               className={styles.row}
               data-selected={isSelected}
               aria-pressed={isSelected}
+              style={{
+                borderColor: section.colorVar,
+                backgroundColor: isSelected
+                  ? `color-mix(in srgb, ${section.colorVar} 14%, var(--ui-white))`
+                  : undefined,
+              }}
               onClick={() => onSelect(section.id)}
             >
               <span

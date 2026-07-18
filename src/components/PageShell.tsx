@@ -47,11 +47,6 @@ export async function PageShell({
   return (
     <LocaleProvider locale={locale}>
       <div className={styles.shell}>
-        {showLocaleSwitcher ? (
-          <div className={styles.utilityBar}>
-            <LanguageSwitcher />
-          </div>
-        ) : null}
         <BrandHeader />
         <main className={mainClassName}>{children}</main>
         <footer className={styles.footer}>
@@ -70,6 +65,11 @@ export async function PageShell({
           </div>
           <p className={styles.footerText}>{m.footer.text}</p>
         </footer>
+        {showLocaleSwitcher ? (
+          <div className={styles.localeBar}>
+            <LanguageSwitcher />
+          </div>
+        ) : null}
       </div>
     </LocaleProvider>
   );

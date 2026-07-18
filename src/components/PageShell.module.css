@@ -4,15 +4,15 @@
   min-height: 100dvh;
 }
 
-/* Top utility bar holding the interface-language switcher, aligned to the
-   right within the content column. */
-.utilityBar {
+/* Interface-language switcher, placed below the footer and centred within the
+   content column across all layouts. */
+.localeBar {
   width: 100%;
   max-width: var(--content-max-width-wide);
   margin: 0 auto;
-  padding: var(--space-3) var(--shell-padding-inline) 0;
+  padding: var(--space-4) var(--shell-padding-inline) var(--space-5);
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .main {

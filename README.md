@@ -73,6 +73,15 @@ The current minimum anonymity threshold is 10 submitted questionnaires.
 
 StressAid is not a medical, psychological, or diagnostic tool. Its results are collective indicators intended to support human discussion and interpretation.
 
+### Cookies (ePrivacy)
+
+The app uses only essential first-party cookies:
+
+- teacher authentication session cookies (Supabase);
+- `stressaid_locale` to remember English or Italian interface language.
+
+It does not use advertising or analytics cookies, and the student questionnaire does not set cookies. Cookie details are published at `/privacy`. A consent banner is not shown while only essential cookies are used.
+
 ## Public beta limitations
 
 This version is a hackathon MVP and early public beta.

@@ -177,7 +177,7 @@ const en: Messages = {
       "Based on the Center for Neuro-Innovation and Performance framework",
   },
   footer: {
-    createdDuring: "Created and grounded in team personal experience during",
+    createdDuring: "Created and grounded in team 5 personal experience during",
     betaBadge: "Hackathon beta · ready to use",
     text: "Organised by EGInA in Cascia, Italy. StressAid is a privacy-first school environment feedback tool.",
   },
@@ -360,7 +360,7 @@ const it: Messages = {
   },
   footer: {
     createdDuring:
-      "Creato e fondato sull’esperienza personale del team durante",
+      "Creato e fondato sull’esperienza personale del team 5 durante",
     betaBadge: "Beta hackathon · pronto all’uso",
     text: "Organizzato da EGInA a Cascia, Italia. StressAid è uno strumento di feedback sull’ambiente scolastico attento alla privacy.",
   },

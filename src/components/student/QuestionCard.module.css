@@ -1,0 +1,80 @@
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+}
+
+/* Tighter padding on small screens so the five-option row fits comfortably. */
+@media (max-width: 480px) {
+  .card {
+    padding: var(--space-4) var(--space-3);
+  }
+}
+
+.sectionName {
+  margin: 0 0 var(--space-1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--shu-blue);
+}
+
+.question {
+  margin: 0 0 var(--space-5);
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+}
+
+/* Remove default focus ring shift; keep a clear visible ring on the heading. */
+.question:focus-visible {
+  outline: 3px solid var(--shu-blue);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.back,
+.next {
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.back {
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.back:hover {
+  border-color: var(--color-text-muted);
+}
+
+.next {
+  border: 0;
+  background-color: var(--shu-blue);
+  color: var(--ui-white);
+}
+
+.next:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--shu-blue) 88%, black);
+}
+
+.next:disabled {
+  background-color: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}

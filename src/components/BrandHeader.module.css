@@ -7,12 +7,12 @@
 .inner {
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: var(--space-3) var(--shell-padding-inline);
+  /* Minimal vertical padding so a larger logo does not make the header taller. */
+  padding: var(--space-1) var(--shell-padding-inline);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  flex-wrap: wrap;
+  /* Centre the logo on small student screens. */
+  justify-content: center;
 }
 
 .productLink {
@@ -21,37 +21,19 @@
   border-radius: var(--radius-sm);
 }
 
-/* Preserve original aspect ratio: StressAid logo viewBox is 511 x 302.57. */
+/*
+ * StressAid logo keeps its original aspect ratio (viewBox 511 x 302.57).
+ * Responsive width: ~135px on mobile scaling up to ~180px on tablet/desktop,
+ * while the header stays compact vertically.
+ */
 .stressaidLogo {
-  width: auto;
-  height: 48px;
+  width: clamp(160px, 22vw, 210px);
+  height: auto;
 }
 
-.attribution {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--space-1);
-}
-
-.attributionLabel {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-}
-
-/* Preserve original aspect ratio: SHU2026 logo is 300 x 61. */
-.shuLogo {
-  width: auto;
-  height: 28px;
-}
-
-@media (max-width: 520px) {
+/* From tablet up, align the logo to the start of the content column. */
+@media (min-width: 720px) {
   .inner {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .attribution {
-    align-items: center;
+    justify-content: flex-start;
   }
 }

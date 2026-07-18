@@ -1,0 +1,112 @@
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.heading {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  color: var(--shu-magenta);
+}
+
+.introText {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  max-width: 60ch;
+}
+
+.illustration {
+  display: flex;
+  justify-content: center;
+  /* Pull the surrounding text closer to the illustration, top and bottom. */
+  margin-block: calc(-1 * var(--space-5));
+}
+
+/* Preserve original aspect ratio (616.34 x 596.17, ~square). */
+.illustrationImg {
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+}
+
+/* On mobile, let the illustration extend to the card edges so it reads larger. */
+@media (max-width: 720px) {
+  .illustration {
+    margin-inline: calc(-1 * var(--space-6));
+  }
+
+  .illustrationImg {
+    max-width: none;
+  }
+}
+
+.details {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.reassurances {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.reassuranceItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text);
+}
+
+.reassuranceIcon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, currentColor 12%, white);
+}
+
+.startButton {
+  justify-self: start;
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--space-3) var(--space-6);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--shu-blue);
+  color: var(--ui-white);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.startButton:hover {
+  background-color: color-mix(in srgb, var(--shu-blue) 88%, black);
+}
+
+/* Centre the Welcome heading and Start button on mobile. Placed at the end so
+   these overrides win over the base rules above them. */
+@media (max-width: 720px) {
+  .heading {
+    text-align: center;
+  }
+
+  .startButton {
+    justify-self: center;
+  }
+}

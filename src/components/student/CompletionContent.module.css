@@ -1,0 +1,91 @@
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+  display: grid;
+  gap: var(--space-5);
+  text-align: center;
+  justify-items: center;
+}
+
+.illustration {
+  display: flex;
+  justify-content: center;
+  /* The supplied SVG has large empty transparent bands above and below the
+     doves. These container-relative negative margins let the heading and text
+     sit closer by overlapping only that empty canvas — the full illustration
+     still renders unmodified and uncropped. */
+  margin-top: -15%;
+  margin-bottom: -11%;
+}
+
+/* Preserve original aspect ratio (544.62 x 596.17). */
+.illustrationImg {
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+}
+
+/* On mobile, let the illustration extend to the card edges so it reads larger. */
+@media (max-width: 720px) {
+  .illustration {
+    margin-inline: calc(-1 * var(--space-6));
+  }
+
+  .illustrationImg {
+    max-width: none;
+  }
+}
+
+.content {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 60ch;
+}
+
+.heading {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  color: var(--shu-green);
+}
+
+.message {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.collective {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--ui-navy);
+}
+
+.support {
+  margin: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.homeLink {
+  justify-self: center;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  background-color: var(--shu-blue);
+  color: var(--ui-white);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+.homeLink:hover {
+  background-color: color-mix(in srgb, var(--shu-blue) 88%, black);
+}

@@ -17,10 +17,43 @@
   background-color: var(--color-surface);
 }
 
+/* Secondary SHU2026 event attribution: small, kept subordinate to StressAid. */
+.attribution {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-4) var(--shell-padding-inline) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.attributionLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* SHU2026 logo keeps its original aspect ratio (300 x 61) and stays small. */
+.shuLogo {
+  width: auto;
+  height: 22px;
+}
+
 .footerText {
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: var(--space-4) var(--shell-padding-inline);
+  padding: var(--space-2) var(--shell-padding-inline) var(--space-4);
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+}
+
+/* Centre the attribution on mobile. */
+@media (max-width: 520px) {
+  .attribution {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .footerText {
+    text-align: center;
+  }
 }

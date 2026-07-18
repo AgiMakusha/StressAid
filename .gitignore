@@ -31,8 +31,8 @@ yarn-error.log*
 .vercel
 .env*.local
 
-# local IDE / agent config
+# Local editor configuration
 .cursor/
 
-# private internal documentation (not for public commit)
+# Private internal documentation
 docs/private/

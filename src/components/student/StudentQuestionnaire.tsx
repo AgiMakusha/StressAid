@@ -7,6 +7,7 @@ import {
   QUESTION_COUNT,
   type ResponseValue,
 } from "@/lib/questionnaire";
+import { getQuestion, getSectionName, useLocale } from "@/lib/i18n";
 import { WelcomeCard } from "./WelcomeCard";
 import { QuestionCard } from "./QuestionCard";
 
@@ -32,6 +33,9 @@ function createEmptyAnswers(): Answers {
  */
 export function StudentQuestionnaire() {
   const router = useRouter();
+  // The demo has no campaign, so it follows the global interface language
+  // (real student links follow their campaign/round language instead).
+  const locale = useLocale();
   const [phase, setPhase] = useState<Phase>("welcome");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>(createEmptyAnswers);
@@ -72,10 +76,15 @@ export function StudentQuestionnaire() {
   };
 
   if (phase === "welcome") {
-    return <WelcomeCard onStart={startQuestionnaire} />;
+    return <WelcomeCard onStart={startQuestionnaire} locale={locale} />;
   }
 
-  const section = QUESTIONNAIRE[currentIndex];
+  const base = QUESTIONNAIRE[currentIndex];
+  const section = {
+    ...base,
+    name: getSectionName(locale, base.id),
+    question: getQuestion(locale, base.id),
+  };
 
   return (
     <QuestionCard
@@ -88,6 +97,7 @@ export function StudentQuestionnaire() {
       onBack={goBack}
       onNext={goNext}
       onSubmit={submit}
+      locale={locale}
     />
   );
 }

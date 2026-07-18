@@ -18,6 +18,8 @@ interface QuestionCardProps {
   onBack: () => void;
   onNext: () => void;
   onSubmit: () => void;
+  /** When true, the final submit control is disabled (submission in flight). */
+  submitting?: boolean;
 }
 
 const QUESTION_HEADING_ID = "question-heading";
@@ -38,6 +40,7 @@ export function QuestionCard({
   onBack,
   onNext,
   onSubmit,
+  submitting = false,
 }: QuestionCardProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -78,9 +81,9 @@ export function QuestionCard({
             type="button"
             className={styles.next}
             onClick={onSubmit}
-            disabled={nextDisabled}
+            disabled={nextDisabled || submitting}
           >
-            {studentCopy.questions.submit}
+            {submitting ? "Sending…" : studentCopy.questions.submit}
           </button>
         ) : (
           <button

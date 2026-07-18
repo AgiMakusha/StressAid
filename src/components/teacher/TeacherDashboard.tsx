@@ -51,7 +51,9 @@ function DashboardHeader({ data }: { data: TeacherDashboardData }) {
         <div>
           <p className={styles.demoBadge}>
             <span className={styles.demoDot} aria-hidden="true" />
-            Demo data · Synthetic class example
+            {data.isDemo
+              ? "Demo data · Synthetic class example"
+              : "Hackathon beta · synthetic or test data only"}
           </p>
           <h1 className={styles.className}>{klass.displayName}</h1>
           <p className={styles.campaignTitle}>{campaign.title}</p>

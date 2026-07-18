@@ -59,7 +59,8 @@ export interface SectionAggregate {
 }
 
 interface DashboardBase {
-  isDemo: true;
+  /** true for synthetic demo fixtures, false for real teacher round data. */
+  isDemo: boolean;
   class: ClassMeta;
   campaign: CampaignMeta;
 }

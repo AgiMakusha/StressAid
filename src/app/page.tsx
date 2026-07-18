@@ -14,30 +14,48 @@ export default function HomePage() {
           at class level and shown to teachers as collective signals — never as
           individual results.
         </p>
-        <p className={styles.note}>
-          This is an early application foundation. The questionnaire, scoring,
-          Class Environment Wheel, and teacher dashboard are not implemented yet.
+        <p className={styles.betaNotice}>
+          Hackathon beta — use synthetic or test data only.
         </p>
       </section>
 
-      <section aria-labelledby="explore-heading" className={styles.linksSection}>
-        <h2 id="explore-heading" className={styles.sectionHeading}>
-          Placeholder routes
+      <section aria-labelledby="actions-heading" className={styles.linksSection}>
+        <h2 id="actions-heading" className={styles.sectionHeading}>
+          Get started
         </h2>
-        <ul className={styles.linkList}>
-          <li>
-            <Link href="/student/demo">Student questionnaire (demo)</Link>
-          </li>
-          <li>
-            <Link href="/student/demo/complete">Student completion (demo)</Link>
-          </li>
-          <li>
-            <Link href="/teacher/demo">Teacher dashboard (demo)</Link>
-          </li>
-          <li>
-            <Link href="/privacy">Privacy information</Link>
-          </li>
-        </ul>
+
+        <div className={styles.actions}>
+          <div className={styles.actionCard}>
+            <h3 className={styles.actionTitle}>Answer a questionnaire</h3>
+            <p className={styles.actionBody}>
+              Open the questionnaire link provided by your teacher. It looks
+              like <code>/student/&lt;link-code&gt;</code>.
+            </p>
+            <Link href="/student/demo" className={styles.secondaryAction}>
+              Try the demo questionnaire
+            </Link>
+          </div>
+
+          <div className={styles.actionCard}>
+            <h3 className={styles.actionTitle}>Teachers</h3>
+            <p className={styles.actionBody}>
+              Sign in to create campaigns, start rounds, and view collective
+              results.
+            </p>
+            <div className={styles.actionButtons}>
+              <Link href="/teacher/login" className={styles.primaryAction}>
+                Teacher sign in
+              </Link>
+              <Link href="/teacher/signup" className={styles.secondaryAction}>
+                Create a teacher test account
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <p className={styles.privacyLink}>
+          <Link href="/privacy">Privacy information</Link>
+        </p>
       </section>
     </PageShell>
   );

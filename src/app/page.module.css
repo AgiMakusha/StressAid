@@ -26,6 +26,16 @@
   max-width: 60ch;
 }
 
+.betaNotice {
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted, #f7f7f9);
+  font-weight: var(--font-weight-medium);
+}
+
 .linksSection {
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-5);
@@ -35,10 +45,62 @@
   font-size: var(--font-size-xl);
 }
 
-.linkList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.actions {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  margin-top: var(--space-3);
+}
+
+.actionCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.actionTitle {
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.actionBody {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.actionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.primaryAction {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-md);
+  background: var(--shu-magenta);
+  color: #fff;
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+}
+
+.secondaryAction {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.privacyLink {
+  margin-top: var(--space-4);
 }
